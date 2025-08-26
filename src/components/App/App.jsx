@@ -12,7 +12,6 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState(null);
 
-  // Modal handlers
   const openAddClothes = () => setActiveModal("add-item");
 
   const openItemView = (card) => {

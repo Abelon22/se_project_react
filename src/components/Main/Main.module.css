@@ -2,22 +2,19 @@
   width: 100%;
 }
 
-/* Matches WeatherCard & Header width/padding; sits 32px below WeatherCard */
 .main__section {
   width: 100%;
   max-width: 1440px;
-  margin: 32px auto 0; /* 32px between WeatherCard and this container */
-  padding: 0 16px; /* aligns edges with Header/WeatherCard */
+  margin: 32px auto 0;
+  padding: 0 16px;
 }
 
-/* Hard-coded line: bold + solid black */
 .main__heading {
   margin: 0 0 12px;
   color: rgba(0, 0, 0, 1);
   font-weight: 700;
 }
 
-/* 4 columns, fixed card size cells */
 .main__items {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -27,7 +24,6 @@
   max-width: 1440px;
 }
 
-/* Responsive fallbacks */
 @media (max-width: 1372px) {
   .main__items {
     grid-template-columns: repeat(3, 323px);

@@ -196,7 +196,12 @@
   cursor: not-allowed;
 }
 
-/* Mobile styles */
+.modal__error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
 @media (max-width: 480px) {
   .modal__container {
     padding: 20px;

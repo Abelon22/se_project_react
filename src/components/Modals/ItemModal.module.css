@@ -47,7 +47,8 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: transparent;
+  color: white;
 }
 
 .modal__close:hover {
@@ -99,7 +100,6 @@
   text-transform: capitalize;
 }
 
-/* Mobile styles */
 @media (max-width: 520px) {
   .modal__container {
     width: 90%;

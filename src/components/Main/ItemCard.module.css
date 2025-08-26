@@ -1,10 +1,10 @@
 .itemCard {
   position: relative;
-  width: 100%; /* fills the 323px grid column */
-  height: 100%; /* fills the 326px grid row */
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
-  background: rgba(0, 0, 0, 0.3); /* requested card bg for the image */
-  overflow: hidden; /* keeps image & label within rounded corners */
+  background: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -18,13 +18,12 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* image fills 323x326 */
+  object-fit: cover;
 }
 
-/* Centered label: white 73x24 box with the item name */
 .itemCard__title {
   position: absolute;
-  top: 50%;
+  top: 20px;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 73px;
