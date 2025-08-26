@@ -80,7 +80,7 @@
   font-size: 16px;
   font-weight: 700;
   line-height: 20px;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 1);
 }
 
 .modal__input {
@@ -118,7 +118,7 @@
   font-size: 16px;
   font-weight: 700;
   line-height: 20px;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 1);
   padding: 0;
   margin: 0;
 }
@@ -189,17 +189,20 @@
 
 .modal__submit:hover {
   opacity: 0.8;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .modal__submit:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .modal__error {
-  color: red;
+  color: rgba(255, 77, 0, 1);
   font-size: 12px;
   margin-top: 4px;
+  border: 1px solid rgba(255, 77, 0, 1);
 }
 
 @media (max-width: 480px) {

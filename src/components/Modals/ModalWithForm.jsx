@@ -29,7 +29,6 @@ export function ModalWithForm({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // simple inline validation
     const errors = { name: "", link: "", weather: "" };
     if (!formData.name.trim()) errors.name = "Name is required";
     if (!formData.link.trim()) {
@@ -43,7 +42,6 @@ export function ModalWithForm({
     }
     if (!formData.weather) errors.weather = "Please select a weather type";
 
-    // show errors if any
     if (errors.name || errors.link || errors.weather) {
       setFormError(errors);
       return;
@@ -184,7 +182,7 @@ export function ModalWithForm({
           <button
             type="submit"
             className={styles.modal__submit}
-            disabled={isLoading}
+            disabled={isLoading || Object.values(formError).some(Boolean)}
           >
             {isLoading ? "Saving..." : buttonText}
           </button>

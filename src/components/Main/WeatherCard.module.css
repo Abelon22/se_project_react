@@ -10,6 +10,11 @@
   padding: 0 16px;
 }
 
+.weatherCard__imageContainer {
+  position: relative;
+  width: 100%;
+}
+
 .weatherCard__image {
   display: block;
   width: 100%;
@@ -17,8 +22,23 @@
   object-fit: cover;
 }
 
+.weatherCard__temperature {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 36px;
+  color: rgba(255, 255, 255, 1);
+  font-weight: bold;
+  padding: 8px 12px;
+  z-index: 1;
+}
+
 @media (max-width: 768px) {
   .weatherCard__image {
+    display: none;
+  }
+
+  .weatherCard__temperature {
     display: none;
   }
 }

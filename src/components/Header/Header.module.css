@@ -21,17 +21,23 @@
 }
 
 .header__logo {
-  height: 32px;
+  height: 40px;
+  width: 89px;
+
   flex-shrink: 0;
 }
 .header__date {
   white-space: nowrap;
+  font-weight: 700;
+  font-size: 20px;
 }
 .header__button_add {
   background-color: transparent;
   outline: none;
   border: none;
   cursor: pointer;
+  font-weight: 700;
+  font-size: 20px;
 }
 .header__user {
   display: flex;
@@ -40,6 +46,8 @@
 }
 .header__user_name {
   white-space: nowrap;
+  font-weight: 700;
+  font-size: 20px;
 }
 .header__avatar {
   width: 32px;

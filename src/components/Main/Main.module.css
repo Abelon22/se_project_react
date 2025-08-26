@@ -13,6 +13,7 @@
   margin: 0 0 12px;
   color: rgba(0, 0, 0, 1);
   font-weight: 700;
+  font-size: 20px;
 }
 
 .main__items {
@@ -26,17 +27,17 @@
 
 @media (max-width: 1372px) {
   .main__items {
-    grid-template-columns: repeat(3, 323px);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 @media (max-width: 1039px) {
   .main__items {
-    grid-template-columns: repeat(2, 323px);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 @media (max-width: 708px) {
   .main__items {
-    grid-template-columns: repeat(1, 323px);
+    grid-template-columns: repeat(1, 1fr);
     justify-content: center;
   }
 }

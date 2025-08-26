@@ -5,11 +5,14 @@ export function WeatherCard() {
   return (
     <section className={styles.weatherCard}>
       <div className={styles.weatherCard__container}>
-        <img
-          src={weatherImage}
-          alt="weather"
-          className={styles.weatherCard__image}
-        />
+        <div className={styles.weatherCard__imageContainer}>
+          <img
+            src={weatherImage}
+            alt="weather"
+            className={styles.weatherCard__image}
+          />
+          <span className={styles.weatherCard__temperature}>75 F</span>
+        </div>
       </div>
     </section>
   );

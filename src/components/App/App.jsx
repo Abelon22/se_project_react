@@ -28,7 +28,7 @@ function App() {
       ...item,
       _id: Date.now(),
     };
-    setClothingItems([newItem, ...clothingItems]);
+    setClothingItems((currentItems) => [newItem, ...currentItems]);
     handleCloseModal();
   };
 

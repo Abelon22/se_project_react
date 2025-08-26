@@ -25,7 +25,7 @@ export function Header({ onAddClick }) {
             onClick={onAddClick}
             className={styles.header__button_add}
           >
-            Add clothes
+            +Add clothes
           </button>
           <div className={styles.header__user}>
             <p className={styles.header__user_name}>Terrence Tegegne</p>
