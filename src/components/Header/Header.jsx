@@ -1,7 +1,7 @@
 import Logo from "../../assets/images/logo.png";
 import Avatar from "../../assets/images/Avatar.svg";
 import styles from "./Header.module.css";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 export function Header({ onAddClick }) {
   const dateToday = useMemo(() => {
@@ -11,6 +11,12 @@ export function Header({ onAddClick }) {
     });
   }, []);
 
+  const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpened(!isMobileMenuOpened);
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.header__container}>
@@ -19,7 +25,45 @@ export function Header({ onAddClick }) {
           <p className={styles.header__date}>{dateToday}, West Palm Beach</p>
         </div>
 
-        <div className={styles.header__right}>
+        <button
+          type="button"
+          aria-label={isMobileMenuOpened ? "Close menu" : "Open menu"}
+          aria-controls="site-nav"
+          aria-expanded={isMobileMenuOpened}
+          className={styles.header__menuBtn}
+          onClick={toggleMobileMenu}
+        >
+          {!isMobileMenuOpened ? (
+            <svg
+              className={styles.icon}
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              role="img"
+              aria-hidden="true"
+            >
+              <path d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z"></path>
+            </svg>
+          ) : (
+            <svg
+              className={styles.icon}
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              role="img"
+              aria-hidden="true"
+            >
+              <path d="M18.3 5.7L12 12l6.3 6.3-1.4 1.4L10.6 13.4 4.3 19.7 2.9 18.3 9.2 12 2.9 5.7 4.3 4.3 10.6 10.6 16.9 4.3z"></path>
+            </svg>
+          )}
+        </button>
+
+        <nav
+          id="site-nav"
+          className={`${styles.header__right} ${
+            isMobileMenuOpened ? styles.header__right_open : ""
+          }`}
+        >
           <button
             type="button"
             onClick={onAddClick}
@@ -31,8 +75,17 @@ export function Header({ onAddClick }) {
             <p className={styles.header__user_name}>Terrence Tegegne</p>
             <img src={Avatar} alt="avatar" className={styles.header__avatar} />
           </div>
-        </div>
+        </nav>
       </div>
+
+      {isMobileMenuOpened && (
+        <button
+          type="button"
+          className={styles.header__overlay}
+          aria-label="Close menu"
+          onClick={toggleMobileMenu}
+        />
+      )}
     </header>
   );
 }
