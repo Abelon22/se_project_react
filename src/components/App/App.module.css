@@ -1,5 +1,4 @@
-@import "../../vendors/Fonts.css";
-@import "../../vendors/normalize.css";
+@import "../../index.css";
 
 body {
   font-family: "Cabinet Grotesk", sans-serif;
