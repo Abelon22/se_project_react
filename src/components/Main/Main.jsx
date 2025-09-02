@@ -1,4 +1,4 @@
-import { WeatherCard } from "./Weathercard";
+import { WeatherCard } from "./WeatherCard";
 import { ItemCard } from "./ItemCard";
 import styles from "./Main.module.css";
 

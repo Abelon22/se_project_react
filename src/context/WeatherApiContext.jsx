@@ -1,31 +1,31 @@
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   API_KEY,
   latitude as DEFAULT_LAT,
   longitude as DEFAULT_LON,
-} from "./constants";
-import { classifyWeather } from "./classifyWeather";
-import { getWeatherImageUrl } from "./weatherImagesGlob";
+} from "../utils/constants";
+import { WeatherContext } from "./useWeatherApiContext";
+import { classifyWeather } from "../utils/classifyWeather";
+import { getWeatherImageUrl } from "../utils/weatherImagesGlob";
+import { useLocationSettings } from "./useLocationContext";
 
 const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
 
-export function useWeatherApi(coords = {}) {
+export function WeatherProvider({ children }) {
+  const { coords, mode } = useLocationSettings();
+
   const { lat, lon } = useMemo(() => {
     const safeLat = typeof coords.lat === "number" ? coords.lat : DEFAULT_LAT;
     const safeLon = typeof coords.lon === "number" ? coords.lon : DEFAULT_LON;
     return { lat: safeLat, lon: safeLon };
   }, [coords.lat, coords.lon]);
 
-  const [error, setError] = useState(null);
+  const [weatherApiError, setWeatherApiError] = useState(null);
   const [city, setCity] = useState("");
   const [temperature, setTemperature] = useState({
     farenheit: null,
     celsius: null,
   });
-
-  const convertToCelsius = (farenheit) => {
-    return ((farenheit - 32) * 5) / 9;
-  };
 
   const [weather, setWeather] = useState("");
   const [preciseWeather, setPreciseWeather] = useState({
@@ -34,7 +34,10 @@ export function useWeatherApi(coords = {}) {
     isNightTime: null,
     weatherType: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
+
+  const [isWeatherLoading, setIsWeatherLoading] = useState(false);
+
+  const convertToCelsius = (farenheit) => ((farenheit - 32) * 5) / 9;
 
   const getWeatherCondition = (t) => {
     if (t >= 86) return "hot";
@@ -49,13 +52,12 @@ export function useWeatherApi(coords = {}) {
   }
 
   useEffect(() => {
-    // Don’t fetch until we have numeric coords
     if (typeof lat !== "number" || typeof lon !== "number") return;
 
     const ac = new AbortController();
 
     async function fetchWeather() {
-      setIsLoading(true);
+      setIsWeatherLoading(true);
       try {
         const url = `${BASE_URL}?lat=${lat}&lon=${lon}&units=imperial&appid=${API_KEY}`;
         const res = await fetch(url, { signal: ac.signal });
@@ -76,9 +78,10 @@ export function useWeatherApi(coords = {}) {
         const isDayTime = localTime >= sunrise && localTime < sunset;
 
         setCity(data.name);
+        const f = data.main?.temp ?? null;
         setTemperature({
-          farenheit: data.main?.temp ?? null,
-          celsius: convertToCelsius(data.main?.temp ?? null),
+          farenheit: f,
+          celsius: f == null ? null : convertToCelsius(f),
         });
         setWeather(getWeatherCondition(data.main?.temp ?? 0));
         setPreciseWeather({
@@ -87,13 +90,13 @@ export function useWeatherApi(coords = {}) {
           isNightTime: !isDayTime,
           weatherType: classifyWeather(data.weather),
         });
-        setError(null);
+        setWeatherApiError(null);
       } catch (err) {
         if (err.name !== "AbortError") {
-          setError(`Non API Response: ${err.message || String(err)}`);
+          setWeatherApiError(`Non API Response: ${err.message || String(err)}`);
         }
       } finally {
-        if (!ac.signal.aborted) setIsLoading(false);
+        if (!ac.signal.aborted) setIsWeatherLoading(false);
       }
     }
 
@@ -101,14 +104,23 @@ export function useWeatherApi(coords = {}) {
     return () => ac.abort();
   }, [lat, lon]);
 
-  return {
+  const value = {
     city,
     temperature,
     weather,
-    error,
-    isLoading,
+    weatherApiError,
+    isWeatherLoading,
     preciseWeather,
     getTemperatureFromUnit,
     getWeatherImageUrl,
+    coords,
+    mode,
+
+    setWeatherApiError,
+    setIsWeatherLoading,
   };
+
+  return (
+    <WeatherContext.Provider value={value}>{children}</WeatherContext.Provider>
+  );
 }

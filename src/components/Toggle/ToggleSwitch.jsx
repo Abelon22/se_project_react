@@ -1,31 +1,27 @@
 import styles from "./ToggleSwitch.module.css";
-import { useTempContext } from "../../context/TempContext";
+import { useTempContext } from "../../context/useTempContext";
 
 const ToggleSwitch = () => {
   const { currentTemperatureUnit, handleToggleTemperatureUnit } =
     useTempContext();
 
   return (
-    <div className={styles["toggle-switch"]}>
+    <div className={styles.toggleSwitch}>
       <input
-        className={styles["toggle-switch__checkbox"]}
+        className={styles.toggleSwitchCheckbox}
         id="react-switch-new"
         type="checkbox"
         checked={currentTemperatureUnit === "C"}
         onChange={handleToggleTemperatureUnit}
+        role="switch"
+        aria-checked={currentTemperatureUnit === "C"}
+        aria-label="Toggle temperature unit (Fahrenheit/Celsius)"
       />
-      <label
-        className={styles["toggle-switch__label"]}
-        htmlFor="react-switch-new"
-      >
-        <span className={styles["toggle-switch__button"]}>
-          <span className={styles["toggle-switch__text"]}>
-            {currentTemperatureUnit}
-          </span>
-        </span>
-        <span className={styles["toggle-switch__background"]}>
-          <span className={styles["toggle-switch__f"]}>F</span>
-          <span className={styles["toggle-switch__c"]}>C</span>
+      <label className={styles.toggleSwitchLabel} htmlFor="react-switch-new">
+        <span className={styles.toggleSwitchButton} />
+        <span className={styles.toggleSwitchBackground}>
+          <span className={styles.toggleSwitchF}>F</span>
+          <span className={styles.toggleSwitchC}>C</span>
         </span>
       </label>
     </div>

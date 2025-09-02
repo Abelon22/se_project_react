@@ -1,117 +1,88 @@
-/* Toggle Switch Component with BEM Notation */
-.toggle-switch {
+.toggleSwitch {
   position: relative;
   display: inline-block;
 }
 
-.toggle-switch__checkbox {
-  height: 0;
+/* Visually hide the checkbox */
+.toggleSwitchCheckbox {
+  position: absolute;
+  opacity: 0;
   width: 0;
-  visibility: hidden;
-  position: absolute;
+  height: 0;
 }
 
-.toggle-switch__label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  width: 84px;
-  height: 28px;
-  background: transparent;
-  border-radius: 20px;
-  position: relative;
-  transition: background-color 0.2s;
-  border: none;
-  padding: 0;
-}
-
-.toggle-switch__background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 8px;
-  border-radius: 20px;
-  background: #f0f0f0;
-  z-index: 1;
-}
-
-.toggle-switch__f,
-.toggle-switch__c {
-  font-family: "CabinetGrotesk-Medium", sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1;
-  color: #7e7e7e;
-  transition: color 0.2s ease;
-  z-index: 2;
-  position: relative;
-}
-
-.toggle-switch__button {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 56px;
-  height: 28px;
-  border-radius: 20px;
-  transition: 0.2s ease;
-  background: #000;
-  z-index: 3;
+.toggleSwitchLabel {
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translateX(0);
+  cursor: pointer;
+  width: 84px;
+  height: 28px;
+  background: #fff;
+  border-radius: 20px;
+  position: relative;
+  transition: background-color 0.2s ease;
+  border: 2px solid rgba(126, 126, 126, 1);
+  padding: 0;
 }
 
-.toggle-switch__text {
+/* Text container on top of the moving pill */
+.toggleSwitchBackground {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  border-radius: 18px;
+  background: transparent;
+  z-index: 2; /* above the pill */
+}
+
+.toggleSwitchF,
+.toggleSwitchC {
   font-family: "CabinetGrotesk-Medium", sans-serif;
   font-size: 14px;
   font-weight: 500;
-  color: #fff;
   line-height: 1;
+  transition: color 0.2s ease;
 }
 
-/* Checked state - when Celsius is selected */
-.toggle-switch__checkbox:checked
-  + .toggle-switch__label
-  .toggle-switch__button {
-  left: calc(100% - 56px);
-  background: #fff;
+/* Moving pill UNDER the text */
+.toggleSwitchButton {
+  position: absolute;
+  top: 2px;
+  left: 2px; /* F selected by default */
+  width: 38px;
+  height: 20px;
+  border-radius: 18px;
+  transition: left 0.2s ease;
+  background: #000; /* always black */
+  z-index: 1; /* under the text */
 }
 
-.toggle-switch__checkbox:checked + .toggle-switch__label .toggle-switch__text {
+/* -------- States -------- */
+
+/* Default (F selected): F white on black; C black on white */
+.toggleSwitchCheckbox:not(:checked) + .toggleSwitchLabel .toggleSwitchF {
+  color: #fff;
+}
+.toggleSwitchCheckbox:not(:checked) + .toggleSwitchLabel .toggleSwitchC {
   color: #000;
 }
 
-.toggle-switch__checkbox:checked + .toggle-switch__label .toggle-switch__f {
+/* Checked (C selected): move pill right; C white; F black */
+.toggleSwitchCheckbox:checked + .toggleSwitchLabel .toggleSwitchButton {
+  left: calc(100% - 40px); /* 2px inset + 38px width */
+}
+.toggleSwitchCheckbox:checked + .toggleSwitchLabel .toggleSwitchF {
   color: #000;
 }
-
-.toggle-switch__checkbox:checked + .toggle-switch__label .toggle-switch__c {
-  color: #7e7e7e;
+.toggleSwitchCheckbox:checked + .toggleSwitchLabel .toggleSwitchC {
+  color: #fff;
 }
 
-/* Default state - when Fahrenheit is selected */
-.toggle-switch__checkbox:not(:checked)
-  + .toggle-switch__label
-  .toggle-switch__f {
-  color: #7e7e7e;
-}
-
-.toggle-switch__checkbox:not(:checked)
-  + .toggle-switch__label
-  .toggle-switch__c {
-  color: #000;
-}
-
-/* Active state animation */
-.toggle-switch__label:active .toggle-switch__button {
+/* Optional: little press animation */
+.toggleSwitchLabel:active .toggleSwitchButton {
   width: 60px;
 }

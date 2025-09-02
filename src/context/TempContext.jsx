@@ -1,14 +1,5 @@
-import { createContext, useContext, useState } from "react";
-
-const TempContext = createContext();
-
-export const useTempContext = () => {
-  const context = useContext(TempContext);
-  if (!context) {
-    throw new Error("useTempContext must be used within a TempProvider");
-  }
-  return context;
-};
+import { useState } from "react";
+import { TempContext } from "./useTempContext";
 
 export const TempProvider = ({ children }) => {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");

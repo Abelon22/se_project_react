@@ -1,7 +1,10 @@
 import Logo from "../../assets/images/logo.png";
 import Avatar from "../../assets/images/Avatar.svg";
 import styles from "./Header.module.css";
+import ToggleSwitch from "../Toggle/ToggleSwitch";
 import { useMemo, useState } from "react";
+import { useWeatherContext } from "../../context/useWeatherApiContext";
+import { LocationChoice } from "../LocationChoice/LocationChoice";
 
 export function Header({ onAddClick }) {
   const dateToday = useMemo(() => {
@@ -10,6 +13,8 @@ export function Header({ onAddClick }) {
       day: "numeric",
     });
   }, []);
+
+  const { city } = useWeatherContext();
 
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
 
@@ -22,7 +27,9 @@ export function Header({ onAddClick }) {
       <div className={styles.header__container}>
         <div className={styles.header__left}>
           <img src={Logo} alt="logo" className={styles.header__logo} />
-          <p className={styles.header__date}>{dateToday}, West Palm Beach</p>
+          <p className={styles.header__date}>
+            {dateToday}, {city}
+          </p>
         </div>
 
         <button
@@ -64,6 +71,9 @@ export function Header({ onAddClick }) {
             isMobileMenuOpened ? styles.header__right_open : ""
           }`}
         >
+          <span>Toggle to choose your location!</span>
+          <LocationChoice />
+          <ToggleSwitch />
           <button
             type="button"
             onClick={onAddClick}
