@@ -65,7 +65,6 @@ export function WeatherProvider({ children }) {
 
         const data = await res.json();
 
-        // Build local time from OpenWeather response
         const localTime = new Date((data.dt + data.timezone) * 1000);
         const formattedTime = localTime.toLocaleTimeString("en-US", {
           hour: "2-digit",

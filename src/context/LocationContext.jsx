@@ -11,7 +11,6 @@ export function LocationProvider({ children }) {
 
   useEffect(() => {
     if (mode !== "user") {
-      // Reset to default coords when not using geolocation
       setCoords({ lat: DEFAULT_LAT, lon: DEFAULT_LON });
       return;
     }

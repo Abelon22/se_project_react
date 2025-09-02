@@ -1,4 +1,3 @@
-// The utils files contain default clothing items
 export const defaultClothingItems = [
   {
     _id: 1,

@@ -51,7 +51,7 @@
 }
 
 .locationChoice__checkbox:checked + .locationChoice__track {
-  background: #3b82f6; /* blue-500 */
+  background: rgba(0, 0, 0, 1);
 }
 
 .locationChoice__checkbox:checked
@@ -61,13 +61,6 @@
 }
 
 .locationChoice__checkbox:focus-visible + .locationChoice__track {
-  outline: 3px solid rgba(59, 130, 246, 0.45); /* blue focus */
+  outline: 3px solid rgba(59, 130, 246, 0.45);
   outline-offset: 2px;
 }
-
-/* Disabled state (optional)
-.locationChoice__checkbox:disabled + .locationChoice__track {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-*/

@@ -3,7 +3,6 @@ const allImages = import.meta.glob("../assets/images/**/*.png", {
   as: "url",
 });
 
-console.log(allImages);
 function buildPath(token, time) {
   return `../assets/images/${time}/weather_${token}_time_${time}.png`;
 }

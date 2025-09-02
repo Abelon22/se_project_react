@@ -81,7 +81,6 @@
   display: none;
 }
 
-/* Controls wrapper used in desktop and mobile */
 .header__controls {
   display: flex;
   align-items: center;
@@ -94,13 +93,6 @@
   white-space: nowrap;
 }
 
-/* Optional wrappers to control widths/alignment without touching child modules */
-.header__location {
-}
-.header__toggle {
-}
-
-/* ---------------- INTERMEDIATE SCREENS (760px - 1200px) ---------------- */
 @media (max-width: 1200px) and (min-width: 769px) {
   .header__container {
     padding: 12px 16px;
@@ -133,11 +125,10 @@
   }
 
   .header__controls_label {
-    display: none; /* Hide label on smaller intermediate screens to save space */
+    display: none;
   }
 }
 
-/* ---------------- MOBILE ---------------- */
 @media (max-width: 768px) {
   .header__container {
     gap: 8px;
@@ -167,12 +158,12 @@
     right: 0;
     left: 0;
     margin: 0;
-    padding: 12px 16px; /* <-- gives breathing room from edges */
+    padding: 12px 16px;
     background: #fff;
     border-top: 1px solid #e5e5e5;
     display: none;
     flex-direction: column;
-    align-items: stretch; /* let inner rows span full width */
+    align-items: stretch;
     gap: 12px;
     z-index: 10;
   }
@@ -199,11 +190,10 @@
     font-size: 16px;
   }
 
-  /* Controls row: label grows; LocationChoice + Toggle align right but not glued to edge */
   .header__controls {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr auto auto; /* label | location | toggle */
+    grid-template-columns: 1fr auto auto;
     align-items: center;
     column-gap: 12px;
     row-gap: 8px;
@@ -215,16 +205,15 @@
 
   .header__location {
     justify-self: end;
-    min-width: 150px; /* tweak if your component needs more/less */
+    min-width: 150px;
     max-width: 100%;
   }
 
   .header__toggle {
-    justify-self: end; /* aligns with LocationChoice */
+    justify-self: end;
   }
 }
 
-/* ---------------- VERY SMALL SCREENS ---------------- */
 @media (max-width: 480px) {
   .header__container {
     padding: 8px 12px;
@@ -232,7 +221,7 @@
 
   .header__left {
     gap: 6px;
-    min-width: 0; /* Allow flex items to shrink */
+    min-width: 0;
   }
 
   .header__logo {

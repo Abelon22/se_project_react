@@ -10,7 +10,7 @@ export function LocationChoice() {
 
   return (
     <div className={styles.locationChoice}>
-      <span className={styles.locationChoice__label}>Use My Location</span>
+      <span className={styles.locationChoice__label}>Use Your Location</span>
 
       <label
         className={styles.locationChoice__toggle}
