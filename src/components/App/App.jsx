@@ -6,6 +6,7 @@ import { ItemModal } from "../Modals/ItemModal";
 import { useState } from "react";
 import { defaultClothingItems } from "../../utils/clothingItems";
 import Footer from "../Footer/Footer";
+import { TempProvider } from "../../context/TempContext";
 
 function App() {
   const [clothingItems, setClothingItems] = useState(defaultClothingItems);
@@ -35,31 +36,33 @@ function App() {
   const isModalOpen = activeModal !== "";
 
   return (
-    <main
-      className={`${styles.app} ${isModalOpen ? styles.app_modal_open : ""}`}
-    >
-      <Header onAddClick={openAddClothes} />
-      <Main clothingItems={clothingItems} onCardClick={openItemView} />
+    <TempProvider>
+      <main
+        className={`${styles.app} ${isModalOpen ? styles.app_modal_open : ""}`}
+      >
+        <Header onAddClick={openAddClothes} />
+        <Main clothingItems={clothingItems} onCardClick={openItemView} />
 
-      <ModalWithForm
-        title="New garment"
-        name="add-item"
-        buttonText="Add garment"
-        isOpen={activeModal === "add-item"}
-        onClose={handleCloseModal}
-        onSubmit={handleAddGarment}
-      />
+        <ModalWithForm
+          title="New garment"
+          name="add-item"
+          buttonText="Add garment"
+          isOpen={activeModal === "add-item"}
+          onClose={handleCloseModal}
+          onSubmit={handleAddGarment}
+        />
 
-      <ItemModal
-        isOpen={activeModal === "item-view"}
-        onClose={handleCloseModal}
-        card={selectedCard}
-      />
+        <ItemModal
+          isOpen={activeModal === "item-view"}
+          onClose={handleCloseModal}
+          card={selectedCard}
+        />
 
-      <div className={styles.app_footer}>
-        <Footer />
-      </div>
-    </main>
+        <div className={styles.app_footer}>
+          <Footer />
+        </div>
+      </main>
+    </TempProvider>
   );
 }
 

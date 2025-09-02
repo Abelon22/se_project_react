@@ -1,0 +1,117 @@
+/* Toggle Switch Component with BEM Notation */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+}
+
+.toggle-switch__checkbox {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+  position: absolute;
+}
+
+.toggle-switch__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  width: 84px;
+  height: 28px;
+  background: transparent;
+  border-radius: 20px;
+  position: relative;
+  transition: background-color 0.2s;
+  border: none;
+  padding: 0;
+}
+
+.toggle-switch__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  border-radius: 20px;
+  background: #f0f0f0;
+  z-index: 1;
+}
+
+.toggle-switch__f,
+.toggle-switch__c {
+  font-family: "CabinetGrotesk-Medium", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  color: #7e7e7e;
+  transition: color 0.2s ease;
+  z-index: 2;
+  position: relative;
+}
+
+.toggle-switch__button {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 56px;
+  height: 28px;
+  border-radius: 20px;
+  transition: 0.2s ease;
+  background: #000;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(0);
+}
+
+.toggle-switch__text {
+  font-family: "CabinetGrotesk-Medium", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  line-height: 1;
+}
+
+/* Checked state - when Celsius is selected */
+.toggle-switch__checkbox:checked
+  + .toggle-switch__label
+  .toggle-switch__button {
+  left: calc(100% - 56px);
+  background: #fff;
+}
+
+.toggle-switch__checkbox:checked + .toggle-switch__label .toggle-switch__text {
+  color: #000;
+}
+
+.toggle-switch__checkbox:checked + .toggle-switch__label .toggle-switch__f {
+  color: #000;
+}
+
+.toggle-switch__checkbox:checked + .toggle-switch__label .toggle-switch__c {
+  color: #7e7e7e;
+}
+
+/* Default state - when Fahrenheit is selected */
+.toggle-switch__checkbox:not(:checked)
+  + .toggle-switch__label
+  .toggle-switch__f {
+  color: #7e7e7e;
+}
+
+.toggle-switch__checkbox:not(:checked)
+  + .toggle-switch__label
+  .toggle-switch__c {
+  color: #000;
+}
+
+/* Active state animation */
+.toggle-switch__label:active .toggle-switch__button {
+  width: 60px;
+}
