@@ -1,6 +1,7 @@
 const allImages = import.meta.glob("../assets/images/**/*.png", {
   eager: true,
-  as: "url",
+  query: "?url",
+  import: "default",
 });
 
 function buildPath(token, time) {
