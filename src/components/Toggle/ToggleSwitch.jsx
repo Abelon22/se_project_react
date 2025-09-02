@@ -1,12 +1,12 @@
 import styles from "./ToggleSwitch.module.css";
 import { useTempContext } from "../../context/useTempContext";
 
-const ToggleSwitch = () => {
+const ToggleSwitch = ({ className = "" }) => {
   const { currentTemperatureUnit, handleToggleTemperatureUnit } =
     useTempContext();
 
   return (
-    <div className={styles.toggleSwitch}>
+    <div className={`${styles.toggleSwitch} ${className}`}>
       <input
         className={styles.toggleSwitchCheckbox}
         id="react-switch-new"

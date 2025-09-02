@@ -25,19 +25,77 @@
   max-width: 1440px;
 }
 
-@media (max-width: 1372px) {
+/* Large screens: 4 columns */
+@media (max-width: 1372px) and (min-width: 1201px) {
   .main__items {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-@media (max-width: 1039px) {
+
+/* Intermediate large screens: 3 columns with better spacing */
+@media (max-width: 1200px) and (min-width: 961px) {
   .main__items {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .main__section {
+    margin: 28px auto 0;
+  }
+
+  .main__heading {
+    font-size: 18px;
   }
 }
-@media (max-width: 708px) {
+
+/* Medium screens: 2-3 columns transition */
+@media (max-width: 960px) and (min-width: 769px) {
+  .main__items {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .main__section {
+    margin: 24px auto 0;
+  }
+
+  .main__heading {
+    font-size: 18px;
+  }
+}
+
+/* Small-medium screens: 2 columns */
+@media (max-width: 768px) and (min-width: 581px) {
+  .main__items {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .main__section {
+    margin: 20px auto 0;
+  }
+
+  .main__heading {
+    font-size: 16px;
+  }
+}
+
+/* Small screens: 1 column */
+@media (max-width: 580px) {
   .main__items {
     grid-template-columns: repeat(1, 1fr);
     justify-content: center;
+    gap: 14px;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .main__section {
+    margin: 16px auto 0;
+  }
+
+  .main__heading {
+    font-size: 16px;
+    text-align: center;
   }
 }

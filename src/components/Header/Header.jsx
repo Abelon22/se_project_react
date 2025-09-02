@@ -71,9 +71,16 @@ export function Header({ onAddClick }) {
             isMobileMenuOpened ? styles.header__right_open : ""
           }`}
         >
-          <span>Toggle to choose your location!</span>
-          <LocationChoice />
-          <ToggleSwitch />
+          <div className={styles.header__controls}>
+            <span className={styles.header__controls_label}>
+              Choose your location
+            </span>
+            <div className={styles.header__location}>
+              <LocationChoice />
+            </div>
+            <ToggleSwitch className={styles.header__toggle} />
+          </div>
+
           <button
             type="button"
             onClick={onAddClick}
@@ -81,8 +88,9 @@ export function Header({ onAddClick }) {
           >
             +Add clothes
           </button>
+
           <div className={styles.header__user}>
-            <p className={styles.header__user_name}>Terrence Tegegne</p>
+            <p className={styles.header__user_name}>Octavio de Oro</p>
             <img src={Avatar} alt="avatar" className={styles.header__avatar} />
           </div>
         </nav>
