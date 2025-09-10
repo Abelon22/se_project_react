@@ -3,6 +3,8 @@ import { Header } from "../Header/Header";
 import { Main } from "../Main/Main";
 import { ModalWithForm } from "../Modals/ModalWithForm";
 import { ItemModal } from "../Modals/ItemModal";
+import { Profile } from "../Profile/Profile";
+import { AddItemModal } from "../AddItemModal/AddItemModal";
 import { useState } from "react";
 import { defaultClothingItems } from "../../utils/clothingItems";
 import Footer from "../Footer/Footer";
@@ -40,12 +42,26 @@ function App() {
     >
       <Header onAddClick={openAddClothes} />
       <Main clothingItems={clothingItems} onCardClick={openItemView} />
+      <Profile
+        clothingItems={clothingItems}
+        onCardClick={openItemView}
+        userName="Octavio de Oro"
+        avatar="/src/assets/images/Avatar.svg"
+        onEditProfile={() => {}}
+        onLogout={() => {}}
+      />
 
       <ModalWithForm
         title="New garment"
         name="add-item"
         buttonText="Add garment"
         isOpen={activeModal === "add-item"}
+        onClose={handleCloseModal}
+        onSubmit={handleAddGarment}
+      />
+
+      <AddItemModal
+        isOpen={activeModal === "add-item-modal"}
         onClose={handleCloseModal}
         onSubmit={handleAddGarment}
       />

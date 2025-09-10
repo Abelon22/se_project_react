@@ -5,6 +5,7 @@ import ToggleSwitch from "../Toggle/ToggleSwitch";
 import { useMemo, useState } from "react";
 import { useWeatherContext } from "../../context/useWeatherApiContext";
 import { LocationChoice } from "../LocationChoice/LocationChoice";
+import { NavLink } from "react-router-dom";
 
 export function Header({ onAddClick }) {
   const dateToday = useMemo(() => {
@@ -26,7 +27,9 @@ export function Header({ onAddClick }) {
     <header className={styles.header}>
       <div className={styles.header__container}>
         <div className={styles.header__left}>
-          <img src={Logo} alt="logo" className={styles.header__logo} />
+          <NavLink to="/">
+            <img src={Logo} alt="logo" className={styles.header__logo} />
+          </NavLink>
           <p className={styles.header__date}>
             {dateToday}, {city}
           </p>
@@ -89,10 +92,10 @@ export function Header({ onAddClick }) {
             +Add clothes
           </button>
 
-          <div className={styles.header__user}>
+          <NavLink to="/profile" className={styles.header__user}>
             <p className={styles.header__user_name}>Octavio de Oro</p>
             <img src={Avatar} alt="avatar" className={styles.header__avatar} />
-          </div>
+          </NavLink>
         </nav>
       </div>
 

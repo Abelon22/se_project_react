@@ -1,0 +1,48 @@
+.clothesSection {
+  padding: 20px;
+}
+
+.clothesSection__title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.clothesSection__items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.clothesSection__item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.clothesSection__item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.clothesSection__image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.clothesSection__name {
+  font-size: 16px;
+  margin: 0;
+  text-align: center;
+}
+
+.clothesSection__empty {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+}
