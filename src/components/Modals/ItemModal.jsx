@@ -25,7 +25,11 @@ export function ItemModal({ isOpen, onClose, card }) {
           <img src={closeIcon} alt="Close" />
         </button>
 
-        <img src={card.link} alt={card.name} className={styles.modal__image} />
+        <img
+          src={card.imageUrl}
+          alt={card.name}
+          className={styles.modal__image}
+        />
 
         <div className={styles.modal__content}>
           <h2 className={styles.modal__title}>{card.name}</h2>

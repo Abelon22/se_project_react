@@ -3,7 +3,6 @@ import { Header } from "../Header/Header";
 import { Main } from "../Main/Main";
 import { ModalWithForm } from "../Modals/ModalWithForm";
 import { ItemModal } from "../Modals/ItemModal";
-import { AddItemModal } from "../AddItemModal/AddItemModal";
 import { useState } from "react";
 import { Footer } from "../Footer/Footer";
 
@@ -22,15 +21,6 @@ function App() {
     setSelectedCard(null);
   };
 
-  // const handleAddGarment = (item) => {
-  //   const newItem = {
-  //     ...item,
-
-  //   };
-  //   setClothingItems((currentItems) => [newItem, ...currentItems]);
-  //   handleCloseModal();
-  // };
-
   const isModalOpen = activeModal !== "";
 
   return (
@@ -47,12 +37,6 @@ function App() {
         isOpen={activeModal === "add-item"}
         onClose={handleCloseModal}
       />
-      {/* 
-      <AddItemModal
-        isOpen={activeModal === "add-item-modal"}
-        onClose={handleCloseModal}
-        onSubmit={handleAddGarment}
-      /> */}
 
       <ItemModal
         isOpen={activeModal === "item-view"}

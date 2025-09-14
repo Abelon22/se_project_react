@@ -4,27 +4,45 @@ import { Header } from "../Header/Header";
 import { Footer } from "../Footer/Footer";
 import { SideBar } from "../SideBar/SideBar";
 import { useState } from "react";
+import { ModalWithForm } from "../Modals/ModalWithForm";
+import { ItemModal } from "../Modals/ItemModal";
 
-export function Profile({
-  onCardClick,
-  userName,
-  avatar,
-  onEditProfile,
-  onLogout,
-  onAddClick,
-}) {
+export function Profile() {
+  const [activeModal, setActiveModal] = useState("");
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  const openAddClothes = () => setActiveModal("add-item");
+
+  const openItemView = (card) => {
+    setSelectedCard(card);
+    setActiveModal("item-view");
+  };
+  const handleCloseModal = () => {
+    setActiveModal("");
+    setSelectedCard(null);
+  };
   return (
     <div className={styles.profile}>
-      <Header onAddClick={onAddClick} />
+      <Header onAddClick={openAddClothes} />
       <div className={styles.profile__container}>
         <SideBar
-          userName={userName}
-          avatar={avatar}
-          onEditProfile={onEditProfile}
-          onLogout={onLogout}
+          userName={"Octavio de Oro"}
+          avatar={"/src/assets/images/Avatar.svg"}
         />
-        <ClothesSection onCardClick={onCardClick} />
+        <ClothesSection onCardClick={openItemView} />
       </div>
+      <ModalWithForm
+        title="New garment"
+        name="add-item"
+        buttonText="Add garment"
+        isOpen={activeModal === "add-item"}
+        onClose={handleCloseModal}
+      />
+      <ItemModal
+        isOpen={activeModal === "item-view"}
+        onClose={handleCloseModal}
+        card={selectedCard}
+      />
       <Footer />
     </div>
   );

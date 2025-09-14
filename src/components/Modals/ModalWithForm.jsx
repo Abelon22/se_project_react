@@ -1,68 +1,21 @@
-import { useState } from "react";
 import styles from "./ModalWithForm.module.css";
 import closeIcon from "../../assets/images/close.svg";
 import { useClothingItems } from "../../context/useClothingItems";
+import { useModalForm } from "./hooks/useModalForm";
 
 export function ModalWithForm({ title, name, buttonText, isOpen, onClose }) {
-  const [formData, setFormData] = useState({
-    name: "",
-    imageUrl: "",
-    weather: "",
-  });
+  const {
+    formData,
+    setFormData,
+    setFormError,
+    setIsLoading,
+    formError,
+    isLoading,
+    handleInputChange,
+    handleSubmit,
+  } = useModalForm();
+
   const { createClothingItem } = useClothingItems();
-
-  const [formError, setFormError] = useState({
-    name: "",
-    imageUrl: "",
-    weather: "",
-  });
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleInputChange = (e) => {
-    const { name: field, value } = e.target;
-    setFormData((prev) => ({ ...prev, [field]: value }));
-    if (formError[field]) {
-      setFormError((prev) => ({ ...prev, [field]: "" }));
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const errors = { name: "", imageUrl: "", weather: "" };
-    if (!formData.name.trim()) errors.name = "Name is required";
-    if (!formData.imageUrl.trim()) {
-      errors.imageUrl = "Image URL is required";
-    } else if (
-      !formData.imageUrl.startsWith("http://") &&
-      !formData.imageUrl.startsWith("https://")
-    ) {
-      errors.imageUrl =
-        "Please enter a valid URL (must start with http:// or https://)";
-    }
-    if (!formData.weather) errors.weather = "Please select a weather type";
-
-    if (errors.name || errors.imageUrl || errors.weather) {
-      setFormError(errors);
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      await createClothingItem(formData);
-      setFormData({ name: "", imageUrl: "", weather: "" });
-      setFormError({ name: "", imageUrl: "", weather: "" });
-    } catch (error) {
-      setFormError({
-        name: error?.name || "",
-        imageUrl: error?.imageUrl || "",
-        weather: error?.weather || "",
-      });
-    } finally {
-      setIsLoading(false);
-      handleClose();
-    }
-  };
 
   const handleClose = () => {
     setFormData({ name: "", imageUrl: "", weather: "" });
@@ -96,7 +49,11 @@ export function ModalWithForm({ title, name, buttonText, isOpen, onClose }) {
 
         <h2 className={styles.modal__title}>{title}</h2>
 
-        <form className={styles.modal__form} onSubmit={handleSubmit} noValidate>
+        <form
+          className={styles.modal__form}
+          onSubmit={(e) => handleSubmit(e, createClothingItem, handleClose)}
+          noValidate
+        >
           <div className={styles.modal__field}>
             <label htmlFor="garment-name" className={styles.modal__label}>
               Name
