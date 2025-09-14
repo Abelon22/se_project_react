@@ -1,18 +1,21 @@
-import React from "react";
 import styles from "./Profile.module.css";
-import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
+import { Header } from "../Header/Header";
+import { Footer } from "../Footer/Footer";
+import { SideBar } from "../SideBar/SideBar";
+import { useState } from "react";
 
 export function Profile({
-  clothingItems,
   onCardClick,
   userName,
   avatar,
   onEditProfile,
   onLogout,
+  onAddClick,
 }) {
   return (
     <div className={styles.profile}>
+      <Header onAddClick={onAddClick} />
       <div className={styles.profile__container}>
         <SideBar
           userName={userName}
@@ -20,13 +23,9 @@ export function Profile({
           onEditProfile={onEditProfile}
           onLogout={onLogout}
         />
-        <ClothesSection
-          clothingItems={clothingItems}
-          onCardClick={onCardClick}
-        />
+        <ClothesSection onCardClick={onCardClick} />
       </div>
+      <Footer />
     </div>
   );
 }
-
-export default Profile;

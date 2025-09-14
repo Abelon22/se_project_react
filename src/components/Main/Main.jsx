@@ -3,8 +3,10 @@ import { ItemCard } from "./ItemCard";
 import styles from "./Main.module.css";
 import { useWeatherContext } from "../../context/useWeatherApiContext";
 import { useTempContext } from "../../context/useTempContext";
+import { useClothingItems } from "../../context/useClothingItems";
 
-export function Main({ clothingItems, onCardClick }) {
+export function Main({ onCardClick }) {
+  const { clothingItems } = useClothingItems();
   const { weather, getTemperatureFromUnit } = useWeatherContext();
   const { currentTemperatureUnit } = useTempContext();
 

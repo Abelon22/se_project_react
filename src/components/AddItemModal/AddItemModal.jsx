@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./AddItemModal.module.css";
 
 export function AddItemModal({ isOpen, onClose, onSubmit }) {

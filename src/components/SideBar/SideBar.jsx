@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./SideBar.module.css";
 
 export function SideBar({ userName, avatar, onEditProfile, onLogout }) {
@@ -32,5 +31,3 @@ export function SideBar({ userName, avatar, onEditProfile, onLogout }) {
     </div>
   );
 }
-
-export default SideBar;

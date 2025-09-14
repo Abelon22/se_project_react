@@ -1,25 +1,36 @@
-import React from "react";
 import styles from "./ClothesSection.module.css";
+import { ItemCard } from "../Main/ItemCard";
+import { useClothingItems } from "../../context/useClothingItems";
+import { useWeatherContext } from "../../context/useWeatherApiContext";
+import { useTempContext } from "../../context/useTempContext";
 
-export function ClothesSection({ clothingItems, onCardClick }) {
+export function ClothesSection({ onCardClick }) {
+  const { clothingItems } = useClothingItems();
+  const { weather, getTemperatureFromUnit } = useWeatherContext();
+  const { currentTemperatureUnit } = useTempContext();
+
+  const tempToDisplay = getTemperatureFromUnit(currentTemperatureUnit);
+
+  const itemsToDisplay = clothingItems.filter(
+    (item) => item.weather === weather
+  );
+
   return (
     <section className={styles.clothesSection}>
-      <h2 className={styles.clothesSection__title}>Your Items</h2>
+      <div className={styles.clothesSection__header}>
+        <h2 className={styles.clothesSection__title}>Your Items</h2>
+        <button className={styles.clothesSection__addBtn} type="button">
+          + Add new
+        </button>
+      </div>
       <div className={styles.clothesSection__items}>
-        {clothingItems && clothingItems.length > 0 ? (
-          clothingItems.map((item) => (
-            <div
+        {itemsToDisplay && itemsToDisplay.length > 0 ? (
+          itemsToDisplay.map((item) => (
+            <ItemCard
               key={item._id}
-              className={styles.clothesSection__item}
+              {...item}
               onClick={() => onCardClick(item)}
-            >
-              <img
-                src={item.link || item.imageUrl}
-                alt={item.name}
-                className={styles.clothesSection__image}
-              />
-              <p className={styles.clothesSection__name}>{item.name}</p>
-            </div>
+            />
           ))
         ) : (
           <p className={styles.clothesSection__empty}>No items found</p>

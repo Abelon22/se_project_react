@@ -5,12 +5,18 @@ import { TempProvider } from "./context/TempContext.jsx";
 import { LocationProvider } from "./context/LocationContext.jsx";
 import { WeatherProvider } from "./context/WeatherApiContext.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Profile } from "./components/Profile/Profile.jsx";
+import { ClothingItemsProvider } from "./context/ClothingItemsContext.jsx";
 
 let router = createBrowserRouter(
   [
     {
       path: "/",
       element: <App />,
+    },
+    {
+      path: "/profile",
+      element: <Profile />,
     },
   ],
   {
@@ -20,12 +26,14 @@ let router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <TempProvider>
-      <LocationProvider>
-        <WeatherProvider>
-          <RouterProvider router={router} />
-        </WeatherProvider>
-      </LocationProvider>
-    </TempProvider>
+    <ClothingItemsProvider>
+      <TempProvider>
+        <LocationProvider>
+          <WeatherProvider>
+            <RouterProvider router={router} />
+          </WeatherProvider>
+        </LocationProvider>
+      </TempProvider>
+    </ClothingItemsProvider>
   </React.StrictMode>
 );

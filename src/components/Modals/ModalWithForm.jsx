@@ -1,19 +1,19 @@
 import { useState } from "react";
 import styles from "./ModalWithForm.module.css";
 import closeIcon from "../../assets/images/close.svg";
+import { useClothingItems } from "../../context/useClothingItems";
 
-export function ModalWithForm({
-  title,
-  name,
-  buttonText,
-  isOpen,
-  onClose,
-  onSubmit,
-}) {
-  const [formData, setFormData] = useState({ name: "", link: "", weather: "" });
+export function ModalWithForm({ title, name, buttonText, isOpen, onClose }) {
+  const [formData, setFormData] = useState({
+    name: "",
+    imageUrl: "",
+    weather: "",
+  });
+  const { createClothingItem } = useClothingItems();
+
   const [formError, setFormError] = useState({
     name: "",
-    link: "",
+    imageUrl: "",
     weather: "",
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -29,43 +29,44 @@ export function ModalWithForm({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const errors = { name: "", link: "", weather: "" };
+    const errors = { name: "", imageUrl: "", weather: "" };
     if (!formData.name.trim()) errors.name = "Name is required";
-    if (!formData.link.trim()) {
-      errors.link = "Image URL is required";
+    if (!formData.imageUrl.trim()) {
+      errors.imageUrl = "Image URL is required";
     } else if (
-      !formData.link.startsWith("http://") &&
-      !formData.link.startsWith("https://")
+      !formData.imageUrl.startsWith("http://") &&
+      !formData.imageUrl.startsWith("https://")
     ) {
-      errors.link =
+      errors.imageUrl =
         "Please enter a valid URL (must start with http:// or https://)";
     }
     if (!formData.weather) errors.weather = "Please select a weather type";
 
-    if (errors.name || errors.link || errors.weather) {
+    if (errors.name || errors.imageUrl || errors.weather) {
       setFormError(errors);
       return;
     }
 
     setIsLoading(true);
     try {
-      await onSubmit(formData);
-      setFormData({ name: "", link: "", weather: "" });
-      setFormError({ name: "", link: "", weather: "" });
+      await createClothingItem(formData);
+      setFormData({ name: "", imageUrl: "", weather: "" });
+      setFormError({ name: "", imageUrl: "", weather: "" });
     } catch (error) {
       setFormError({
         name: error?.name || "",
-        link: error?.link || "",
+        imageUrl: error?.imageUrl || "",
         weather: error?.weather || "",
       });
     } finally {
       setIsLoading(false);
+      handleClose();
     }
   };
 
   const handleClose = () => {
-    setFormData({ name: "", link: "", weather: "" });
-    setFormError({ name: "", link: "", weather: "" });
+    setFormData({ name: "", imageUrl: "", weather: "" });
+    setFormError({ name: "", imageUrl: "", weather: "" });
     setIsLoading(false);
     onClose();
   };
@@ -121,14 +122,14 @@ export function ModalWithForm({
             <input
               type="url"
               id="garment-image"
-              name="link"
+              name="imageUrl"
               className={styles.modal__input}
               placeholder="Image URL"
-              value={formData.link}
+              value={formData.imageUrl}
               onChange={handleInputChange}
             />
-            {formError.link && (
-              <p className={styles.modal__error}>{formError.link}</p>
+            {formError.imageUrl && (
+              <p className={styles.modal__error}>{formError.imageUrl}</p>
             )}
           </div>
 

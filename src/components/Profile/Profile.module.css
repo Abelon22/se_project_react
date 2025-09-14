@@ -1,18 +1,35 @@
 .profile {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  min-height: 100vh;
+  background: #ffffff;
+  position: relative;
 }
 
 .profile__container {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 20px;
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Ensure header stays on top */
+.profile .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* Ensure footer is at the bottom */
+.profile .footer {
+  position: relative;
+  z-index: 50;
+  margin-top: auto;
 }
 
 @media (max-width: 768px) {
   .profile__container {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    flex-direction: column;
   }
 }

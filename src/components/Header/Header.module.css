@@ -1,6 +1,12 @@
 .header {
   width: 100%;
   background-color: rgba(243, 243, 243, 1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .header__container {
