@@ -203,3 +203,4 @@ This project is part of a software engineering curriculum and is for educational
 ---
 
 **Note**: Remember to keep your API key secure and never commit it to version control. Use environment variables for sensitive information.
+**Note**: To run the server and the app at once use the concurrent script npm run run:server-app
