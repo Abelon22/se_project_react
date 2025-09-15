@@ -1,8 +1,8 @@
 import styles from "./App.module.css";
 import { Header } from "../Header/Header";
 import { Main } from "../Main/Main";
+import { ModalWithForm } from "../Modals/ModalWithForm";
 import { AddItemModal } from "../Modals/AddItemModal";
-import { ItemModal } from "../Modals/ItemModal";
 import { Footer } from "../Footer/Footer";
 import { useModalContext } from "../../context/useModalContext";
 import { DeleteModal } from "../Modals/DeleteModal";
@@ -31,7 +31,7 @@ function App() {
       <Header onAddClick={openModal.bind(null, "add-item")} />
       <Main onCardClick={openItemView} />
 
-      <AddItemModal
+      <ModalWithForm
         title="New garment"
         name="add-item"
         buttonText="Add garment"
@@ -39,7 +39,7 @@ function App() {
         onClose={closeModal}
       />
 
-      <ItemModal
+      <AddItemModal
         isOpen={activeModal === "item-view"}
         onClose={closeCardModal}
         card={selectedCard}

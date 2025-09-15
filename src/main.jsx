@@ -4,12 +4,12 @@ import App from "./components/App/App.jsx";
 import { TempProvider } from "./context/TempContext.jsx";
 import { LocationProvider } from "./context/LocationContext.jsx";
 import { WeatherProvider } from "./context/WeatherApiContext.jsx";
-import { createHashRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Profile } from "./components/Profile/Profile.jsx";
 import { ClothingItemsProvider } from "./context/ClothingItemsContext.jsx";
 import { ModalProvider } from "./context/ModalContext.jsx";
 
-let router = createHashRouter(
+let router = createBrowserRouter(
   [
     {
       path: "/",
@@ -21,7 +21,7 @@ let router = createHashRouter(
     },
   ],
   {
-    basename: "/se_project_react",
+    basename: "/se_project_react/",
   }
 );
 
