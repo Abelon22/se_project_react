@@ -3,7 +3,7 @@ import ClothesSection from "../ClothesSection/ClothesSection";
 import { Header } from "../Header/Header";
 import { Footer } from "../Footer/Footer";
 import { SideBar } from "../SideBar/SideBar";
-import { ModalWithForm } from "../Modals/ModalWithForm";
+import { AddItemModal } from "../Modals/AddItemModal";
 import { ItemModal } from "../Modals/ItemModal";
 import { DeleteModal } from "../Modals/DeleteModal";
 import { useModalContext } from "../../context/useModalContext";
@@ -44,7 +44,7 @@ export function Profile() {
       <div className={styles.profile__footerWrap}>
         <Footer />
       </div>
-      <ModalWithForm
+      <AddItemModal
         title="New garment"
         name="add-item"
         buttonText="Add garment"

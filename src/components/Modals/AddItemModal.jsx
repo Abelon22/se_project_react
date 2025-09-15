@@ -1,9 +1,9 @@
-import styles from "./ModalWithForm.module.css";
+import styles from "./AddItemModal.module.css";
 import closeIcon from "../../assets/images/close.svg";
 import { useClothingItems } from "../../context/useClothingItems";
 import { useModalForm } from "../../hooks/useModalForm";
 
-export function ModalWithForm({ title, name, buttonText, isOpen, onClose }) {
+export function AddItemModal({ title, name, buttonText, isOpen, onClose }) {
   const {
     formData,
     setFormData,

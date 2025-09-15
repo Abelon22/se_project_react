@@ -1,7 +1,7 @@
 import styles from "./App.module.css";
 import { Header } from "../Header/Header";
 import { Main } from "../Main/Main";
-import { ModalWithForm } from "../Modals/ModalWithForm";
+import { AddItemModal } from "../Modals/AddItemModal";
 import { ItemModal } from "../Modals/ItemModal";
 import { Footer } from "../Footer/Footer";
 import { useModalContext } from "../../context/useModalContext";
@@ -25,7 +25,7 @@ function App() {
       <Header onAddClick={openModal.bind(null, "add-item")} />
       <Main onCardClick={openItemView} />
 
-      <ModalWithForm
+      <AddItemModal
         title="New garment"
         name="add-item"
         buttonText="Add garment"
