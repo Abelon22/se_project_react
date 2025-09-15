@@ -1,4 +1,4 @@
-@import "../../index.css";
+@import "../.././index.css";
 
 body {
   font-family: "Cabinet Grotesk", sans-serif;
@@ -6,17 +6,19 @@ body {
 
 .app {
   position: relative;
+  min-height: 100vh;
   width: 100%;
   height: 100%;
   min-width: 1360px;
   background-color: rgba(243, 243, 243, 1);
 
-  padding-left: 40px;
+  padding: 32px 40px 24px;
   overflow: hidden;
+}
 
-  padding-right: 40px;
-  padding-top: 32px;
-  padding-bottom: 24px;
+.app_container {
+  max-width: 1360px;
+  margin: 0 auto;
 }
 
 .app_modal_open {

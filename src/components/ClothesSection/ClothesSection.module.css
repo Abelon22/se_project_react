@@ -1,45 +1,49 @@
 .clothesSection {
-  flex: 1;
-  padding: 32px 20px 20px 20px;
-  background-color: rgba(243, 243, 243, 1);
+  padding: 0;
+
+  min-height: calc(100vh - 40px);
 }
 
 .clothesSection__header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 32px;
-  padding-top: 0px; /* Remove extra padding since header spacing is handled by profile container */
+  justify-content: flex-start; /* title + button sit together on the left */
+  align-items: baseline; /* aligns with the text baseline */
+  gap: 12px;
+  flex-wrap: wrap; /* if it’s tight, wrap nicely */
+  padding-top: 20px;
+
+  margin-bottom: 24px;
 }
 
 .clothesSection__title {
-  font-size: 20px;
   margin: 0;
+  font-size: 20px;
   font-weight: 700;
-  color: rgba(0, 0, 0, 1);
 }
 
 .clothesSection__addBtn {
   background: none;
   border: none;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   color: rgba(0, 0, 0, 0.6);
   text-decoration: underline;
   cursor: pointer;
   transition: color 0.2s ease;
-}
 
+  margin-top: 2px;
+}
 .clothesSection__addBtn:hover {
   color: rgba(0, 0, 0, 1);
 }
 
 .clothesSection__items {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-auto-rows: 326px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
   gap: 20px;
   width: 100%;
+  grid-auto-rows: minmax(0, auto);
 }
 
 .clothesSection__empty {
@@ -51,43 +55,36 @@
   padding: 40px 0;
 }
 
+@media (min-width: 1200px) {
+  .clothesSection__items {
+    grid-auto-rows: 240px;
+  }
+
+  /* CSS Modules-friendly override of ItemCard’s aspect-ratio */
+  .clothesSection :global(.itemCard) {
+    aspect-ratio: auto; /* turn it off so row height is respected */
+    height: 100%; /* fill the grid row */
+  }
+  .clothesSection :global(.itemCard__image) {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* Responsive: 3 → 2 → 1 */
 @media (max-width: 1200px) {
   .clothesSection__items {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
-
-@media (max-width: 768px) {
-  .clothesSection {
-    margin-left: 0;
-    padding: 20px;
-  }
-
-  .clothesSection__header {
-    padding-top: 0;
-    margin-bottom: 20px;
-  }
-
-  .clothesSection__title {
-    font-size: 18px;
-  }
-
-  .clothesSection__items {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-}
-
 @media (max-width: 580px) {
   .clothesSection__items {
     grid-template-columns: 1fr;
-    justify-content: center;
-    gap: 20px;
-    max-width: 320px;
-    margin: 0 auto;
-  }
 
+    gap: 16px;
+    max-width: 360px; /* optional: prevents super-wide single card */
+    margin: 0 auto; /* center single column */
+  }
   .clothesSection__header {
     flex-direction: column;
     align-items: flex-start;

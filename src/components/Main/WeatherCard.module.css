@@ -1,7 +1,7 @@
 .weatherCard {
   width: 100%;
   margin-top: 32px;
-  padding: 0 40px;
+  padding: 0;
 }
 
 .weatherCard__container {

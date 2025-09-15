@@ -26,16 +26,23 @@ export function Profile() {
         isModalOpen ? styles.profile__is_modal_open : ""
       }`}
     >
-      <Header onAddClick={openAddClothes} />
+      <div className={styles.profile__headerWrap}>
+        <Header onAddClick={openAddClothes} />
+      </div>
       <div className={styles.profile__container}>
         <SideBar
           userName={"Octavio de Oro"}
           avatar={"./src/assets/images/Avatar.svg"}
         />
-        <ClothesSection
-          onCardClick={openItemView}
-          onAddClick={openAddClothes}
-        />
+        <div className={styles.profile__main}>
+          <ClothesSection
+            onCardClick={openItemView}
+            onAddClick={openAddClothes}
+          />
+        </div>
+      </div>
+      <div className={styles.profile__footerWrap}>
+        <Footer />
       </div>
       <ModalWithForm
         title="New garment"
@@ -54,7 +61,6 @@ export function Profile() {
         selectedCard={selectedCard}
         onClose={closeModal}
       />
-      <Footer />
     </div>
   );
 }
