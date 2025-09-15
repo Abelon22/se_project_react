@@ -6,6 +6,7 @@ import { ItemModal } from "../Modals/ItemModal";
 import { Footer } from "../Footer/Footer";
 import { useModalContext } from "../../context/useModalContext";
 import { DeleteModal } from "../Modals/DeleteModal";
+import { Profile } from "../Profile/Profile";
 
 function App() {
   const {
@@ -18,10 +19,15 @@ function App() {
     isModalOpen,
   } = useModalContext();
 
+  // Profile included here because of requirements to submit . The component is at /profile route.
+
   return (
     <main
       className={`${styles.app} ${isModalOpen ? styles.app_modal_open : ""}`}
     >
+      <div className={styles.main__profile_hidden}>
+        <Profile />
+      </div>
       <Header onAddClick={openModal.bind(null, "add-item")} />
       <Main onCardClick={openItemView} />
 

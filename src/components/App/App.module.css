@@ -28,3 +28,7 @@ body {
 .app_footer {
   margin-top: 80px;
 }
+
+.main__profile_hidden {
+  display: none;
+}
