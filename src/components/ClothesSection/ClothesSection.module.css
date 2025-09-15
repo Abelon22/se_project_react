@@ -64,7 +64,6 @@
   }
 }
 
-/* Tablet: slightly smaller min width keeps 2–3 cols as space allows */
 @media (max-width: 960px) {
   .clothesSection__items {
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -72,7 +71,6 @@
   }
 }
 
-/* Phones (≤630px): 1 column, responsive cards */
 @media (max-width: 630px) {
   .clothesSection {
     padding: 0 16px;

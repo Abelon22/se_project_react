@@ -1,7 +1,7 @@
 .itemCard {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 5; /* or try 3/4, 1/1, etc. */
+  aspect-ratio: 4 / 5;
   min-width: 0;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.3);
