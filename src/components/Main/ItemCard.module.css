@@ -73,9 +73,12 @@
   }
 }
 
-@media (max-width: 580px) {
+@media (max-width: 630px) {
   .itemCard {
     border-radius: 12px;
+    aspect-ratio: 4 / 5;
+    max-width: 320px;
+    margin: 0 auto;
   }
 
   .itemCard__title {
@@ -84,5 +87,36 @@
     font-size: 14px;
     top: 26px;
     border-radius: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .itemCard {
+    border-radius: 10px;
+    aspect-ratio: 1 / 1;
+    max-width: 280px;
+  }
+
+  .itemCard__title {
+    width: 85px;
+    height: 28px;
+    font-size: 13px;
+    top: 24px;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 360px) {
+  .itemCard {
+    aspect-ratio: 1 / 1;
+    max-width: 240px;
+    border-radius: 8px;
+  }
+
+  .itemCard__title {
+    width: 80px;
+    height: 26px;
+    font-size: 12px;
+    top: 22px;
   }
 }

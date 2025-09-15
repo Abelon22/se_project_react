@@ -16,8 +16,14 @@
 
 .profile__main {
   min-width: 0;
+  height: calc(
+    100vh - 40px - 36px
+  ); /* Account for header (40px) and margin-top (36px) */
+  max-height: calc(100vh - 40px - 36px);
   background: rgba(243, 243, 243, 1);
-  padding: 24px 32px 16px;
+  margin-top: 36px;
+  overflow-y: auto; /* Enable scrolling when content overflows */
+  padding: 47px 32px 16px;
 }
 
 .profile__is_modal_open {

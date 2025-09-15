@@ -15,7 +15,7 @@
   justify-content: flex-start;
   gap: 16px;
   margin-bottom: 40px;
-  padding-top: 47px; /* 47px spacing from header */
+  padding-top: 67px; /* Align with ClothesSection header: 47px (Profile padding) + 20px (ClothesSection padding) */
   padding-left: 20px; /* Align with logo padding */
 }
 
