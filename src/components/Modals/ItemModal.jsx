@@ -1,11 +1,18 @@
 import styles from "./ItemModal.module.css";
 import closeIcon from "../../assets/images/close.svg";
+import { useModalContext } from "../../context/useModalContext";
 
 export function ItemModal({ isOpen, onClose, card }) {
+  const { openDeleteModal } = useModalContext();
+
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
+  };
+
+  const handleDeleteClick = () => {
+    openDeleteModal(card);
   };
 
   if (!isOpen || !card) return null;
@@ -37,6 +44,9 @@ export function ItemModal({ isOpen, onClose, card }) {
             Weather:{" "}
             <span className={styles.modal__weather_value}>{card.weather}</span>
           </p>
+          <button className={styles.modal__delete} onClick={handleDeleteClick}>
+            Delete Item
+          </button>
         </div>
       </div>
     </div>

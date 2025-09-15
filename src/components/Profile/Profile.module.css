@@ -1,13 +1,15 @@
 .profile {
   min-height: 100vh;
   background: #ffffff;
-  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .profile__container {
   display: flex;
-  min-height: 100vh;
-  position: relative;
+  flex: 1;
+  padding-top: 40px; /* Account for fixed header */
+  min-height: 0; /* Allow flex shrinking */
 }
 
 /* Ensure header stays on top */
@@ -26,6 +28,10 @@
   position: relative;
   z-index: 50;
   margin-top: auto;
+}
+
+.profile__is_modal_open {
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 768px) {

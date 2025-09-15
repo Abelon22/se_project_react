@@ -1,13 +1,12 @@
 .weatherCard {
   width: 100%;
   margin-top: 32px;
+  padding: 0 40px;
 }
 
 .weatherCard__container {
   width: 100%;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 16px;
+  max-width: 100%;
 }
 
 .weatherCard__imageContainer {
@@ -33,7 +32,17 @@
   z-index: 1;
 }
 
+@media (max-width: 1200px) and (min-width: 769px) {
+  .weatherCard {
+    padding: 0 16px;
+  }
+}
+
 @media (max-width: 768px) {
+  .weatherCard {
+    padding: 0 16px;
+  }
+
   .weatherCard__image {
     display: none;
   }

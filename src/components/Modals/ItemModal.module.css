@@ -100,6 +100,26 @@
   text-transform: capitalize;
 }
 
+.modal__delete {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: rgba(255, 77, 0, 1);
+
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.2s ease;
+}
+
+.modal__delete:hover {
+  opacity: 0.7;
+}
+
 @media (max-width: 520px) {
   .modal__container {
     width: 90%;
@@ -133,6 +153,12 @@
     font-size: 14px;
     line-height: 18px;
   }
+
+  .modal__delete {
+    bottom: 16px;
+    right: 16px;
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 320px) {
@@ -149,5 +175,11 @@
   .modal__weather {
     font-size: 13px;
     line-height: 16px;
+  }
+
+  .modal__delete {
+    bottom: 12px;
+    right: 12px;
+    font-size: 13px;
   }
 }

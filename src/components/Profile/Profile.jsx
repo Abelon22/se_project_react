@@ -3,45 +3,56 @@ import ClothesSection from "../ClothesSection/ClothesSection";
 import { Header } from "../Header/Header";
 import { Footer } from "../Footer/Footer";
 import { SideBar } from "../SideBar/SideBar";
-import { useState } from "react";
 import { ModalWithForm } from "../Modals/ModalWithForm";
 import { ItemModal } from "../Modals/ItemModal";
+import { DeleteModal } from "../Modals/DeleteModal";
+import { useModalContext } from "../../context/useModalContext";
 
 export function Profile() {
-  const [activeModal, setActiveModal] = useState("");
-  const [selectedCard, setSelectedCard] = useState(null);
+  const {
+    activeModal,
+    selectedCard,
+    openModal,
+    closeModal,
+    closeCardModal,
+    openItemView,
+    isModalOpen,
+  } = useModalContext();
 
-  const openAddClothes = () => setActiveModal("add-item");
-
-  const openItemView = (card) => {
-    setSelectedCard(card);
-    setActiveModal("item-view");
-  };
-  const handleCloseModal = () => {
-    setActiveModal("");
-    setSelectedCard(null);
-  };
+  const openAddClothes = () => openModal("add-item");
   return (
-    <div className={styles.profile}>
+    <div
+      className={`${styles.profile} ${
+        isModalOpen ? styles.profile__is_modal_open : ""
+      }`}
+    >
       <Header onAddClick={openAddClothes} />
       <div className={styles.profile__container}>
         <SideBar
           userName={"Octavio de Oro"}
-          avatar={"/src/assets/images/Avatar.svg"}
+          avatar={"./src/assets/images/Avatar.svg"}
         />
-        <ClothesSection onCardClick={openItemView} />
+        <ClothesSection
+          onCardClick={openItemView}
+          onAddClick={openAddClothes}
+        />
       </div>
       <ModalWithForm
         title="New garment"
         name="add-item"
         buttonText="Add garment"
         isOpen={activeModal === "add-item"}
-        onClose={handleCloseModal}
+        onClose={closeModal}
       />
       <ItemModal
         isOpen={activeModal === "item-view"}
-        onClose={handleCloseModal}
+        onClose={closeCardModal}
         card={selectedCard}
+      />
+      <DeleteModal
+        isOpen={activeModal === "delete"}
+        selectedCard={selectedCard}
+        onClose={closeModal}
       />
       <Footer />
     </div>

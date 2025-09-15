@@ -7,6 +7,7 @@ import { WeatherProvider } from "./context/WeatherApiContext.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Profile } from "./components/Profile/Profile.jsx";
 import { ClothingItemsProvider } from "./context/ClothingItemsContext.jsx";
+import { ModalProvider } from "./context/ModalContext.jsx";
 
 let router = createBrowserRouter(
   [
@@ -30,7 +31,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <TempProvider>
         <LocationProvider>
           <WeatherProvider>
-            <RouterProvider router={router} />
+            <ModalProvider>
+              <RouterProvider router={router} />
+            </ModalProvider>
           </WeatherProvider>
         </LocationProvider>
       </TempProvider>

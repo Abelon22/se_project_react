@@ -2,15 +2,12 @@ import styles from "./ClothesSection.module.css";
 import { ItemCard } from "../Main/ItemCard";
 import { useClothingItems } from "../../context/useClothingItems";
 import { useWeatherContext } from "../../context/useWeatherApiContext";
-import { useTempContext } from "../../context/useTempContext";
 
-export function ClothesSection({ onCardClick }) {
+export function ClothesSection({ onCardClick, onAddClick }) {
+  const { weather } = useWeatherContext();
   const { clothingItems } = useClothingItems();
-  const { weather, getTemperatureFromUnit } = useWeatherContext();
-  const { currentTemperatureUnit } = useTempContext();
 
-  const tempToDisplay = getTemperatureFromUnit(currentTemperatureUnit);
-
+  // Show all items in profile view, not filtered by weather
   const itemsToDisplay = clothingItems.filter(
     (item) => item.weather === weather
   );
@@ -19,7 +16,11 @@ export function ClothesSection({ onCardClick }) {
     <section className={styles.clothesSection}>
       <div className={styles.clothesSection__header}>
         <h2 className={styles.clothesSection__title}>Your Items</h2>
-        <button className={styles.clothesSection__addBtn} type="button">
+        <button
+          className={styles.clothesSection__addBtn}
+          type="button"
+          onClick={onAddClick}
+        >
           + Add new
         </button>
       </div>

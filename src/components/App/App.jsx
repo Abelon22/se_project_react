@@ -3,31 +3,26 @@ import { Header } from "../Header/Header";
 import { Main } from "../Main/Main";
 import { ModalWithForm } from "../Modals/ModalWithForm";
 import { ItemModal } from "../Modals/ItemModal";
-import { useState } from "react";
 import { Footer } from "../Footer/Footer";
+import { useModalContext } from "../../context/useModalContext";
+import { DeleteModal } from "../Modals/DeleteModal";
 
 function App() {
-  const [activeModal, setActiveModal] = useState("");
-  const [selectedCard, setSelectedCard] = useState(null);
-
-  const openAddClothes = () => setActiveModal("add-item");
-
-  const openItemView = (card) => {
-    setSelectedCard(card);
-    setActiveModal("item-view");
-  };
-  const handleCloseModal = () => {
-    setActiveModal("");
-    setSelectedCard(null);
-  };
-
-  const isModalOpen = activeModal !== "";
+  const {
+    activeModal,
+    selectedCard,
+    openModal,
+    closeModal,
+    closeCardModal,
+    openItemView,
+    isModalOpen,
+  } = useModalContext();
 
   return (
     <main
       className={`${styles.app} ${isModalOpen ? styles.app_modal_open : ""}`}
     >
-      <Header onAddClick={openAddClothes} />
+      <Header onAddClick={openModal.bind(null, "add-item")} />
       <Main onCardClick={openItemView} />
 
       <ModalWithForm
@@ -35,13 +30,18 @@ function App() {
         name="add-item"
         buttonText="Add garment"
         isOpen={activeModal === "add-item"}
-        onClose={handleCloseModal}
+        onClose={closeModal}
       />
 
       <ItemModal
         isOpen={activeModal === "item-view"}
-        onClose={handleCloseModal}
+        onClose={closeCardModal}
         card={selectedCard}
+      />
+      <DeleteModal
+        isOpen={activeModal === "delete"}
+        selectedCard={selectedCard}
+        onClose={closeModal}
       />
 
       <div className={styles.app_footer}>

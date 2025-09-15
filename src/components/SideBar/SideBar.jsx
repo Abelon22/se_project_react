@@ -1,6 +1,6 @@
 import styles from "./SideBar.module.css";
 
-export function SideBar({ userName, avatar, onEditProfile, onLogout }) {
+export function SideBar({ userName, avatar }) {
   return (
     <div className={styles.sidebar}>
       <div className={styles.sidebar__user}>
@@ -9,24 +9,7 @@ export function SideBar({ userName, avatar, onEditProfile, onLogout }) {
           alt="User avatar"
           className={styles.sidebar__avatar}
         />
-        <h2 className={styles.sidebar__name}>{userName || "User Name"}</h2>
-      </div>
-
-      <div className={styles.sidebar__actions}>
-        <button
-          type="button"
-          className={styles.sidebar__button}
-          onClick={onEditProfile}
-        >
-          Change profile data
-        </button>
-        <button
-          type="button"
-          className={styles.sidebar__button}
-          onClick={onLogout}
-        >
-          Log out
-        </button>
+        <h2 className={styles.sidebar__name}>{userName}</h2>
       </div>
     </div>
   );
