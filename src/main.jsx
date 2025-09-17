@@ -8,7 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Profile } from "./components/Profile/Profile.jsx";
 import { ClothingItemsProvider } from "./context/ClothingItemsContext.jsx";
 import { ModalProvider } from "./context/ModalContext.jsx";
-import Home from "./components/Home/Home.jsx";
+import Main from "./components/Main/Main.jsx";
 
 let router = createBrowserRouter(
   [
@@ -16,7 +16,7 @@ let router = createBrowserRouter(
       path: "/",
       element: <App />,
       children: [
-        { index: true, element: <Home /> },
+        { index: true, element: <Main /> },
         { path: "profile", element: <Profile /> },
       ],
     },

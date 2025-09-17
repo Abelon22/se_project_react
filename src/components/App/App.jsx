@@ -7,6 +7,7 @@ import { ModalWithForm } from "../Modals/ModalWithForm";
 import { AddItemModal } from "../Modals/AddItemModal";
 import { DeleteModal } from "../Modals/DeleteModal";
 import { useModalContext } from "../../context/useModalContext";
+import { Profile } from "../Profile/Profile";
 
 export default function App() {
   const { activeModal, selectedCard, openModal, closeModal, closeCardModal } =
@@ -19,6 +20,9 @@ export default function App() {
       <Header onAddClick={openAddClothes} />
 
       <Outlet />
+      <div className={styles.app_profile_hidden}>
+        <Profile />
+      </div>
 
       <ModalWithForm
         title="New garment"

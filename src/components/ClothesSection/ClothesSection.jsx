@@ -1,5 +1,5 @@
 import styles from "./ClothesSection.module.css";
-import { ItemCard } from "../Main/ItemCard";
+import { ItemCard } from "../MainGallery/ItemCard";
 import { useClothingItems } from "../../context/useClothingItems";
 import { useWeatherContext } from "../../context/useWeatherApiContext";
 
