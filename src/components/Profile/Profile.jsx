@@ -1,34 +1,18 @@
 import styles from "./Profile.module.css";
 import ClothesSection from "../ClothesSection/ClothesSection";
-import { Header } from "../Header/Header";
-import { Footer } from "../Footer/Footer";
 import { SideBar } from "../SideBar/SideBar";
-import { ModalWithForm } from "../Modals/ModalWithForm";
-import { AddItemModal } from "../Modals/AddItemModal";
-import { DeleteModal } from "../Modals/DeleteModal";
 import { useModalContext } from "../../context/useModalContext";
 
 export function Profile() {
-  const {
-    activeModal,
-    selectedCard,
-    openModal,
-    closeModal,
-    closeCardModal,
-    openItemView,
-    isModalOpen,
-  } = useModalContext();
-
+  const { openModal, openItemView, isModalOpen } = useModalContext();
   const openAddClothes = () => openModal("add-item");
+
   return (
     <div
       className={`${styles.profile} ${
         isModalOpen ? styles.profile__is_modal_open : ""
       }`}
     >
-      <div className={styles.profile__headerWrap}>
-        <Header onAddClick={openAddClothes} />
-      </div>
       <div className={styles.profile__container}>
         <SideBar
           userName={"Octavio de Oro"}
@@ -41,26 +25,6 @@ export function Profile() {
           />
         </div>
       </div>
-      <div className={styles.profile__footerWrap}>
-        <Footer />
-      </div>
-      <ModalWithForm
-        title="New garment"
-        name="add-item"
-        buttonText="Add garment"
-        isOpen={activeModal === "add-item"}
-        onClose={closeModal}
-      />
-      <AddItemModal
-        isOpen={activeModal === "item-view"}
-        onClose={closeCardModal}
-        card={selectedCard}
-      />
-      <DeleteModal
-        isOpen={activeModal === "delete"}
-        selectedCard={selectedCard}
-        onClose={closeModal}
-      />
     </div>
   );
 }

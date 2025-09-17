@@ -1,35 +1,32 @@
+// components/Layout/Layout.jsx
+import { Outlet } from "react-router-dom";
 import styles from "./App.module.css";
 import { Header } from "../Header/Header";
-import { Main } from "../Main/Main";
+import { Footer } from "../Footer/Footer";
 import { ModalWithForm } from "../Modals/ModalWithForm";
 import { AddItemModal } from "../Modals/AddItemModal";
-import { Footer } from "../Footer/Footer";
-import { useModalContext } from "../../context/useModalContext";
 import { DeleteModal } from "../Modals/DeleteModal";
-import { Profile } from "../Profile/Profile";
+import { useModalContext } from "../../context/useModalContext";
 
-function App() {
+export default function App() {
   const {
     activeModal,
     selectedCard,
     openModal,
     closeModal,
     closeCardModal,
-    openItemView,
     isModalOpen,
   } = useModalContext();
 
-  // Profile included here because of requirements to submit . The component is at /profile route.
+  const openAddClothes = () => openModal("add-item");
 
   return (
     <main
       className={`${styles.app} ${isModalOpen ? styles.app_modal_open : ""}`}
     >
-      <div className={styles.main__profile_hidden}>
-        <Profile />
-      </div>
-      <Header onAddClick={openModal.bind(null, "add-item")} />
-      <Main onCardClick={openItemView} />
+      <Header onAddClick={openAddClothes} />
+
+      <Outlet />
 
       <ModalWithForm
         title="New garment"
@@ -38,7 +35,6 @@ function App() {
         isOpen={activeModal === "add-item"}
         onClose={closeModal}
       />
-
       <AddItemModal
         isOpen={activeModal === "item-view"}
         onClose={closeCardModal}
@@ -56,5 +52,3 @@ function App() {
     </main>
   );
 }
-
-export default App;
