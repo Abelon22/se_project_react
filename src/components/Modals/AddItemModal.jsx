@@ -39,11 +39,15 @@ export function AddItemModal({ isOpen, onClose, card }) {
         />
 
         <div className={styles.modal__content}>
-          <h2 className={styles.modal__title}>{card.name}</h2>
-          <p className={styles.modal__weather}>
-            Weather:{" "}
-            <span className={styles.modal__weather_value}>{card.weather}</span>
-          </p>
+          <div className={styles.modal__info}>
+            <h2 className={styles.modal__title}>{card.name}</h2>
+            <p className={styles.modal__weather}>
+              Weather:{" "}
+              <span className={styles.modal__weather_value}>
+                {card.weather}
+              </span>
+            </p>
+          </div>
           <button className={styles.modal__delete} onClick={handleDeleteClick}>
             Delete Item
           </button>

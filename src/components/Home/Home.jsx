@@ -1,4 +1,3 @@
-// components/Home/Home.jsx
 import { Main } from "../Main/Main";
 import { useModalContext } from "../../context/useModalContext";
 

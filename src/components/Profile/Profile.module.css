@@ -25,7 +25,7 @@
 }
 
 .profile__is_modal_open {
-  background-color: rgba(0, 0, 0, 0.3);
+  /* Background overlay handled by modal component */
 }
 
 .profile__footerWrap {

@@ -9,21 +9,13 @@ import { DeleteModal } from "../Modals/DeleteModal";
 import { useModalContext } from "../../context/useModalContext";
 
 export default function App() {
-  const {
-    activeModal,
-    selectedCard,
-    openModal,
-    closeModal,
-    closeCardModal,
-    isModalOpen,
-  } = useModalContext();
+  const { activeModal, selectedCard, openModal, closeModal, closeCardModal } =
+    useModalContext();
 
   const openAddClothes = () => openModal("add-item");
 
   return (
-    <main
-      className={`${styles.app} ${isModalOpen ? styles.app_modal_open : ""}`}
-    >
+    <main className={styles.app}>
       <Header onAddClick={openAddClothes} />
 
       <Outlet />

@@ -4,15 +4,11 @@ import { SideBar } from "../SideBar/SideBar";
 import { useModalContext } from "../../context/useModalContext";
 
 export function Profile() {
-  const { openModal, openItemView, isModalOpen } = useModalContext();
+  const { openModal, openItemView } = useModalContext();
   const openAddClothes = () => openModal("add-item");
 
   return (
-    <div
-      className={`${styles.profile} ${
-        isModalOpen ? styles.profile__is_modal_open : ""
-      }`}
-    >
+    <div className={styles.profile}>
       <div className={styles.profile__container}>
         <SideBar
           userName={"Octavio de Oro"}
