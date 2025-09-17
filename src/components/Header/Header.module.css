@@ -51,6 +51,8 @@
 .header__user {
   display: flex;
   align-items: center;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 1);
   gap: 8px;
   margin-right: 0;
 }

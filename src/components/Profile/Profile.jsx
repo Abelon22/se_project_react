@@ -11,7 +11,7 @@ export function Profile() {
     <div className={styles.profile}>
       <div className={styles.profile__container}>
         <SideBar
-          userName={"Octavio de Oro"}
+          userName={"John Overton Bell"}
           avatar={"./src/assets/images/Avatar.svg"}
         />
         <div className={styles.profile__main}>

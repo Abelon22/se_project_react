@@ -109,10 +109,10 @@
       "_id": 18
     },
     {
-      "name": "garmant",
+      "name": "some garment",
       "weather": "warm",
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Beanie.png?etag=bc10497cc80fa557f036e94f9999f7b2",
-      "_id": 19
+      "_id": 20
     }
   ]
 }

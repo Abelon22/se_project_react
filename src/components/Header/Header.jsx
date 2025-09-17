@@ -93,7 +93,7 @@ export function Header({ onAddClick }) {
           </button>
 
           <NavLink to="/profile" className={styles.header__user}>
-            <p className={styles.header__user_name}>Octavio de Oro</p>
+            <p className={styles.header__user_name}>John Overton Bell</p>
             <img src={Avatar} alt="avatar" className={styles.header__avatar} />
           </NavLink>
         </nav>
