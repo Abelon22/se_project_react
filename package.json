@@ -9,11 +9,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
-    "server": "json-server --watch db.json --id _id --port 3002",
-    "dev:server": "json-server --watch db.json --id _id --port 3002",
-    "dev:vite": "wait-on http://localhost:3000 && vite --open",
-    "run:server-app": "concurrently -k \"npm:dev:server\" \"npm:dev:vite\""
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "dotenv": "^17.2.1",
