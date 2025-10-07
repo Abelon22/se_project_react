@@ -70,6 +70,29 @@
   margin-right: 0;
 }
 
+.header__auth_buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header__auth_button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 20px;
+  color: rgba(0, 0, 0, 1);
+  width: 67px;
+  height: 24px;
+  padding: 0;
+  transition: opacity 0.2s ease;
+}
+
+.header__auth_button:hover {
+  opacity: 0.7;
+}
+
 .header__menuBtn {
   display: none;
   background: none;
@@ -117,6 +140,10 @@
   }
 
   .header__button_add {
+    font-size: 18px;
+  }
+
+  .header__auth_button {
     font-size: 18px;
   }
 
@@ -197,6 +224,15 @@
   }
 
   .header__button_add {
+    font-size: 16px;
+  }
+
+  .header__auth_buttons {
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .header__auth_button {
     font-size: 16px;
   }
 

@@ -35,6 +35,43 @@
   text-align: center;
 }
 
+.sidebar__button {
+  background: none;
+  border: none;
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 1);
+  cursor: pointer;
+  padding: 0;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  text-align: left;
+  transition: opacity 0.2s ease;
+}
+
+.sidebar__button:hover {
+  opacity: 0.7;
+}
+
+.sidebar__button_logout {
+  background: none;
+  border: none;
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 1);
+  cursor: pointer;
+  padding: 0;
+  margin-left: 20px;
+  text-align: left;
+  transition: opacity 0.2s ease;
+}
+
+.sidebar__button_logout:hover {
+  opacity: 0.7;
+}
+
 @media (max-width: 768px) {
   .sidebar {
     width: 100%;

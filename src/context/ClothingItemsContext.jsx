@@ -1,5 +1,11 @@
-import { useState, useEffect } from "react";
-import { BASE_URL } from "../utils/api";
+import { useState, useEffect, useCallback, useMemo } from "react";
+import {
+  getAllItems,
+  createItem,
+  deleteItem,
+  likeItem,
+  disLikeItem,
+} from "../utils/api";
 import { ClothingItemsContext } from "./useClothingItems";
 
 export const ClothingItemsProvider = ({ children }) => {
@@ -9,117 +15,149 @@ export const ClothingItemsProvider = ({ children }) => {
     GET: null,
     POST: null,
     DELETE: null,
+    PUT: null,
   });
-
   const [mutationMessage, setMutationMessage] = useState({
     POST: null,
     DELETE: null,
+    PUT: null,
   });
 
-  useEffect(() => {
-    async function fetchClothingItems() {
-      setIsClothingItemsLoading(true);
-      try {
-        const response = await fetch(BASE_URL);
-        if (!response.ok) {
-          throw new Error("Failed to fetch clothing items");
-        }
-
-        const data = await response.json();
-        console.log("Upon component mount", data);
-
-        if (data.length > 0) {
-          setClothingItems(data);
-        } else {
-          setClothingItems([]);
-        }
-      } catch (error) {
-        setClothingItemsError((currentError) => ({
-          ...currentError,
-          GET: error.message,
-        }));
-        console.error("Error fetching clothing items:", error);
-      } finally {
-        setIsClothingItemsLoading(false);
-        setClothingItemsError((currentError) => ({
-          ...currentError,
-          GET: null,
-        }));
-      }
+  const refreshClothingItems = useCallback(async () => {
+    setIsClothingItemsLoading(true);
+    setClothingItemsError((e) => ({ ...e, GET: null }));
+    try {
+      const data = await getAllItems();
+      setClothingItems(Array.isArray(data) ? data : []);
+    } catch (error) {
+      setClothingItemsError((e) => ({
+        ...e,
+        GET: error?.message || "Failed to fetch clothing items",
+      }));
+    } finally {
+      setIsClothingItemsLoading(false);
     }
-    fetchClothingItems();
   }, []);
 
-  const createClothingItem = async ({ name, weather, imageUrl }) => {
+  useEffect(() => {
+    refreshClothingItems();
+  }, [refreshClothingItems]);
+
+  // ---- Create
+  const createClothingItem = useCallback(async (name, weather, imageUrl) => {
+    setClothingItemsError((e) => ({ ...e, POST: null }));
     try {
-      const response = await fetch(BASE_URL, {
-        method: "POST",
-        body: JSON.stringify({ name, weather, imageUrl }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to create clothing item");
-      }
-
-      const data = await response.json();
-      console.log("Upon creating a new clothing item", data);
-      if (data) {
-        setClothingItems((currentItems) => [data, ...currentItems]);
-        setMutationMessage({
-          POST: `Successfully created clothing item with id ${data._id}`,
-        });
-      }
+      const created = await createItem(name, weather, imageUrl); // POST /items
+      setClothingItems((items) => [created, ...items]);
+      setMutationMessage((m) => ({
+        ...m,
+        POST: `Created item ${created?.name ?? ""} (${created?._id ?? ""})`,
+      }));
+      return created;
     } catch (error) {
-      setClothingItemsError({ ...clothingItemsError, POST: error.message });
-      console.error("Error creating clothing item:", error);
-    } finally {
-      setClothingItemsError(null);
+      const msg = error?.message || "Failed to create clothing item";
+      setClothingItemsError((e) => ({ ...e, POST: msg }));
+      throw error;
     }
-  };
+  }, []);
 
-  const deleteClothingItem = async (id) => {
+  // ---- Delete
+  const deleteClothingItem = useCallback(async (itemId) => {
+    setClothingItemsError((e) => ({ ...e, DELETE: null }));
     try {
-      const response = await fetch(`${BASE_URL}/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to delete clothing item");
-      }
-
-      const data = await response.json();
-      if (data) {
-        setClothingItems((currentItems) =>
-          currentItems.filter((item) => item._id !== id)
-        );
-        setMutationMessage({
-          DELETE: `Successfully deleted clothing item with id ${id}`,
-        });
-      }
+      await deleteItem(itemId); // DELETE /items/:id
+      setClothingItems((items) => items.filter((it) => it._id !== itemId));
+      setMutationMessage((m) => ({
+        ...m,
+        DELETE: `Deleted item ${itemId}`,
+      }));
     } catch (error) {
-      setClothingItemsError({ ...clothingItemsError, DELETE: error.message });
-      console.error("Error deleting clothing item:", error);
-    } finally {
-      setClothingItemsError(null);
+      const msg = error?.message || "Failed to delete clothing item";
+      setClothingItemsError((e) => ({ ...e, DELETE: msg }));
+      throw error;
     }
-  };
+  }, []);
+
+  // ---- Like
+  const likeClothingItem = useCallback(async (itemId) => {
+    setClothingItemsError((e) => ({ ...e, PUT: null }));
+    try {
+      const updated = await likeItem(itemId); // PUT /items/:id/likes
+      setClothingItems((items) =>
+        items.map((it) => (it._id === itemId ? updated : it))
+      );
+      setMutationMessage((m) => ({
+        ...m,
+        PUT: `Liked item ${itemId}`,
+      }));
+      return updated;
+    } catch (error) {
+      const msg = error?.message || "Failed to like item";
+      setClothingItemsError((e) => ({ ...e, PUT: msg }));
+      throw error;
+    }
+  }, []);
+
+  // ---- Dislike
+  const dislikeClothingItem = useCallback(async (itemId) => {
+    setClothingItemsError((e) => ({ ...e, PUT: null }));
+    try {
+      const updated = await disLikeItem(itemId); // DELETE /items/:id/likes
+      setClothingItems((items) =>
+        items.map((it) => (it._id === itemId ? updated : it))
+      );
+      setMutationMessage((m) => ({
+        ...m,
+        PUT: `Removed like on item ${itemId}`,
+      }));
+      return updated;
+    } catch (error) {
+      const msg = error?.message || "Failed to remove like";
+      setClothingItemsError((e) => ({ ...e, PUT: msg }));
+      throw error;
+    }
+  }, []);
+
+  // ---- Selector: items by owner id (from state only)
+  const getItemsByOwner = useCallback(
+    (ownerId) => clothingItems.filter((it) => it.owner === ownerId),
+    [clothingItems]
+  );
+
+  const value = useMemo(
+    () => ({
+      // state
+      clothingItems,
+      isClothingItemsLoading,
+      clothingItemsError,
+      mutationMessage,
+      // actions
+      refreshClothingItems,
+      createClothingItem,
+      deleteClothingItem,
+      likeClothingItem,
+      dislikeClothingItem,
+      // selectors
+      getItemsByOwner,
+      // optional setter if you need direct control
+      setClothingItems,
+    }),
+    [
+      clothingItems,
+      isClothingItemsLoading,
+      clothingItemsError,
+      mutationMessage,
+      refreshClothingItems,
+      createClothingItem,
+      deleteClothingItem,
+      likeClothingItem,
+      dislikeClothingItem,
+      getItemsByOwner,
+    ]
+  );
 
   return (
-    <ClothingItemsContext.Provider
-      value={{
-        clothingItems,
-        isClothingItemsLoading,
-        clothingItemsError,
-        mutationMessage,
-        createClothingItem,
-        deleteClothingItem,
-      }}
-    >
+    <ClothingItemsContext.Provider value={value}>
       {children}
     </ClothingItemsContext.Provider>
   );

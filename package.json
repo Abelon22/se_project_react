@@ -10,9 +10,9 @@
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "server": "json-server --watch db.json --id _id --port 3001", 
-    "dev:server":  "json-server --watch db.json --id _id --port 3001", 
-    "dev:vite":   "wait-on http://localhost:3001 && vite --open", 
+    "server": "json-server --watch db.json --id _id --port 3002",
+    "dev:server": "json-server --watch db.json --id _id --port 3002",
+    "dev:vite": "wait-on http://localhost:3000 && vite --open",
     "run:server-app": "concurrently -k \"npm:dev:server\" \"npm:dev:vite\""
   },
   "dependencies": {

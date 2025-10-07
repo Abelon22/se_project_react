@@ -1,9 +1,11 @@
 import styles from "./AddItemModal.module.css";
 import closeIcon from "../../assets/images/close.svg";
 import { useModalContext } from "../../context/useModalContext";
+import { useCurrentUser } from "../../context/useCurrentUser";
 
 export function AddItemModal({ isOpen, onClose, card }) {
   const { openDeleteModal } = useModalContext();
+  const { currentUser } = useCurrentUser();
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -14,6 +16,8 @@ export function AddItemModal({ isOpen, onClose, card }) {
   const handleDeleteClick = () => {
     openDeleteModal(card);
   };
+
+  const isOwn = card?.owner === currentUser?._id;
 
   if (!isOpen || !card) return null;
 
@@ -48,9 +52,14 @@ export function AddItemModal({ isOpen, onClose, card }) {
               </span>
             </p>
           </div>
-          <button className={styles.modal__delete} onClick={handleDeleteClick}>
-            Delete Item
-          </button>
+          {isOwn && (
+            <button
+              className={styles.modal__delete}
+              onClick={handleDeleteClick}
+            >
+              Delete Item
+            </button>
+          )}
         </div>
       </div>
     </div>

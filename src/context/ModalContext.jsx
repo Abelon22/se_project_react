@@ -13,6 +13,18 @@ export const ModalProvider = ({ children }) => {
     setActiveModal("delete");
   };
 
+  const openRegistrationModal = () => {
+    setActiveModal("registration");
+  };
+
+  const openLoginModal = () => {
+    setActiveModal("login");
+  };
+
+  const openEditProfileModal = () => {
+    setActiveModal("edit-profile");
+  };
+
   const closeModal = () => {
     setActiveModal("");
     setSelectedCard(null);
@@ -39,6 +51,9 @@ export const ModalProvider = ({ children }) => {
         openModal,
         closeModal,
         closeCardModal,
+        openLoginModal,
+        openRegistrationModal,
+        openEditProfileModal,
         openItemView,
         isModalOpen,
         openDeleteModal,

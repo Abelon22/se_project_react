@@ -6,6 +6,8 @@ import { useMemo, useState } from "react";
 import { useWeatherContext } from "../../context/useWeatherApiContext";
 import { LocationChoice } from "../LocationChoice/LocationChoice";
 import { NavLink } from "react-router-dom";
+import { useCurrentUser } from "../../context/useCurrentUser";
+import { useModalContext } from "../../context/useModalContext";
 
 export function Header({ onAddClick }) {
   const dateToday = useMemo(() => {
@@ -16,6 +18,8 @@ export function Header({ onAddClick }) {
   }, []);
 
   const { city } = useWeatherContext();
+  const { currentUser, isLoggedIn } = useCurrentUser();
+  const { openLoginModal, openRegistrationModal } = useModalContext();
 
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
 
@@ -84,18 +88,45 @@ export function Header({ onAddClick }) {
             <ToggleSwitch className={styles.header__toggle} />
           </div>
 
-          <button
-            type="button"
-            onClick={onAddClick}
-            className={styles.header__button_add}
-          >
-            +Add clothes
-          </button>
+          {isLoggedIn ? (
+            <>
+              <button
+                type="button"
+                onClick={onAddClick}
+                className={styles.header__button_add}
+              >
+                +Add clothes
+              </button>
 
-          <NavLink to="/profile" className={styles.header__user}>
-            <p className={styles.header__user_name}>John Overton Bell</p>
-            <img src={Avatar} alt="avatar" className={styles.header__avatar} />
-          </NavLink>
+              <NavLink to="/profile" className={styles.header__user}>
+                <p className={styles.header__user_name}>
+                  {currentUser?.name || "User"}
+                </p>
+                <img
+                  src={currentUser?.avatar || Avatar}
+                  alt="avatar"
+                  className={styles.header__avatar}
+                />
+              </NavLink>
+            </>
+          ) : (
+            <div className={styles.header__auth_buttons}>
+              <button
+                type="button"
+                onClick={openRegistrationModal}
+                className={styles.header__auth_button}
+              >
+                Sign Up
+              </button>
+              <button
+                type="button"
+                onClick={openLoginModal}
+                className={styles.header__auth_button}
+              >
+                Log In
+              </button>
+            </div>
+          )}
         </nav>
       </div>
 

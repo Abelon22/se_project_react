@@ -6,6 +6,8 @@ import { Footer } from "../Footer/Footer";
 import { ModalWithForm } from "../Modals/ModalWithForm";
 import { AddItemModal } from "../Modals/AddItemModal";
 import { DeleteModal } from "../Modals/DeleteModal";
+import { LoginModal } from "../Modals/LoginModal";
+import { RegistrationModal } from "../Modals/RegistrationModal";
 import { useModalContext } from "../../context/useModalContext";
 import { Profile } from "../Profile/Profile";
 import Main from "../Main/Main";
@@ -41,6 +43,11 @@ export default function App() {
       <DeleteModal
         isOpen={activeModal === "delete"}
         selectedCard={selectedCard}
+        onClose={closeModal}
+      />
+      <LoginModal isOpen={activeModal === "login"} onClose={closeModal} />
+      <RegistrationModal
+        isOpen={activeModal === "registration"}
         onClose={closeModal}
       />
 

@@ -9,6 +9,8 @@ import { Profile } from "./components/Profile/Profile.jsx";
 import { ClothingItemsProvider } from "./context/ClothingItemsContext.jsx";
 import { ModalProvider } from "./context/ModalContext.jsx";
 import Main from "./components/Main/Main.jsx";
+import ProtectedRouter from "./components/ProtectedRouter.jsx";
+import CurrentUserProvider from "./context/CurrentUserContext.jsx";
 
 let router = createBrowserRouter(
   [
@@ -17,7 +19,14 @@ let router = createBrowserRouter(
       element: <App />,
       children: [
         { index: true, element: <Main /> },
-        { path: "profile", element: <Profile /> },
+        {
+          path: "profile",
+          element: (
+            <ProtectedRouter>
+              <Profile />
+            </ProtectedRouter>
+          ),
+        },
       ],
     },
   ],
@@ -28,16 +37,18 @@ let router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ClothingItemsProvider>
-      <TempProvider>
-        <LocationProvider>
-          <WeatherProvider>
-            <ModalProvider>
-              <RouterProvider router={router} />
-            </ModalProvider>
-          </WeatherProvider>
-        </LocationProvider>
-      </TempProvider>
-    </ClothingItemsProvider>
+    <CurrentUserProvider>
+      <ClothingItemsProvider>
+        <TempProvider>
+          <LocationProvider>
+            <WeatherProvider>
+              <ModalProvider>
+                <RouterProvider router={router} />
+              </ModalProvider>
+            </WeatherProvider>
+          </LocationProvider>
+        </TempProvider>
+      </ClothingItemsProvider>
+    </CurrentUserProvider>
   </React.StrictMode>
 );

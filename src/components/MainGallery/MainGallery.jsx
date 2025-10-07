@@ -10,6 +10,8 @@ export function MainGallery({ onCardClick }) {
   const { weather, getTemperatureFromUnit } = useWeatherContext();
   const { currentTemperatureUnit } = useTempContext();
 
+  console.log(clothingItems);
+
   const tempToDisplay = getTemperatureFromUnit(currentTemperatureUnit);
 
   const itemsToDisplay = clothingItems.filter(

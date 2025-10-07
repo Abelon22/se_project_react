@@ -2,12 +2,15 @@ import styles from "./ClothesSection.module.css";
 import { ItemCard } from "../MainGallery/ItemCard";
 import { useClothingItems } from "../../context/useClothingItems";
 import { useWeatherContext } from "../../context/useWeatherApiContext";
+import { useCurrentUser } from "../../context/useCurrentUser";
 
 export function ClothesSection({ onCardClick, onAddClick }) {
-  const { weather } = useWeatherContext();
-  const { clothingItems } = useClothingItems();
+  const { currentUser } = useCurrentUser();
 
-  const itemsToDisplay = clothingItems.filter(
+  const { weather } = useWeatherContext();
+  const { getItemsByOwner } = useClothingItems();
+
+  const itemsToDisplay = getItemsByOwner(currentUser._id).filter(
     (item) => item.weather === weather
   );
 
