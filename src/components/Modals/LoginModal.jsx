@@ -34,6 +34,14 @@ export function LoginModal({ isOpen, onClose }) {
     return emailRegex.test(email);
   };
 
+  const isFormValid = () => {
+    return (
+      formData.email.trim() &&
+      validateEmail(formData.email) &&
+      formData.password.trim()
+    );
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -132,7 +140,7 @@ export function LoginModal({ isOpen, onClose }) {
 
           <div className={styles.modal__field}>
             <label htmlFor="login-password" className={styles.modal__label}>
-              Password
+              {formError.general ? "Incorrect Password" : "Password"}
             </label>
             <input
               type="password"
@@ -146,12 +154,17 @@ export function LoginModal({ isOpen, onClose }) {
             {formError.password && (
               <p className={styles.modal__error}>{formError.password}</p>
             )}
+            {formError.general && (
+              <p className={styles.modal__error_auth}>
+                Email or password incorrect
+              </p>
+            )}
           </div>
 
           <button
             type="submit"
             className={styles.modal__submit}
-            disabled={isLoading}
+            disabled={isLoading || !isFormValid()}
           >
             {isLoading ? "Logging in..." : "Log in"}
           </button>

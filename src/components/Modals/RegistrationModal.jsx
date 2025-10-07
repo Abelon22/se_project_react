@@ -43,6 +43,17 @@ export function RegistrationModal({ isOpen, onClose }) {
     return url.startsWith("http://") || url.startsWith("https://");
   };
 
+  const isFormValid = () => {
+    return (
+      formData.email.trim() &&
+      validateEmail(formData.email) &&
+      formData.password.trim() &&
+      formData.password.length >= 6 &&
+      formData.name.trim() &&
+      (!formData.avatar || validateUrl(formData.avatar))
+    );
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -231,7 +242,7 @@ export function RegistrationModal({ isOpen, onClose }) {
           <button
             type="submit"
             className={styles.modal__submit}
-            disabled={isLoading}
+            disabled={isLoading || !isFormValid()}
           >
             {isLoading ? "Signing up..." : "Sign up"}
           </button>

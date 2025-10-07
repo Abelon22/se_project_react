@@ -47,7 +47,7 @@ export const ClothingItemsProvider = ({ children }) => {
   const createClothingItem = useCallback(async (name, weather, imageUrl) => {
     setClothingItemsError((e) => ({ ...e, POST: null }));
     try {
-      const created = await createItem(name, weather, imageUrl); // POST /items
+      const created = await createItem(name, weather, imageUrl);
       setClothingItems((items) => [created, ...items]);
       setMutationMessage((m) => ({
         ...m,

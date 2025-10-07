@@ -61,9 +61,11 @@ const apiPost = (path, body, opts) =>
   apiFetch(path, { method: "POST", body, ...opts });
 const apiDelete = (path, opts) => apiFetch(path, { method: "DELETE", ...opts });
 
-const apiPatch = (path, opts) => apiFetch(path, { method: "PATCH", ...opts });
+const apiPatch = (path, body, opts) =>
+  apiFetch(path, { method: "PATCH", body, ...opts });
 
-const apiPut = (path, opts) => apiFetch(path, { method: "PUT", ...opts });
+const apiPut = (path, body, opts) =>
+  apiFetch(path, { method: "PUT", body, ...opts });
 
 // specific calls
 export const getMe = (opts) => apiGet("/users/me", opts);
@@ -73,15 +75,15 @@ export const postSignup = (name, avatar, email, password) =>
   apiPost("/signup", { name, avatar, email, password }, { withAuth: false });
 
 export const updateUser = (name, avatar) =>
-  apiPatch("/users/me", { body: { name, avatar } });
+  apiPatch("/users/me", { name, avatar });
 
 export const deleteItem = (itemId) => apiDelete(`/items/${itemId}`);
 
-export const likeItem = (itemId) => apiPut(`/items/${itemId}/likes`);
+export const likeItem = (itemId) => apiPut(`/items/${itemId}/likes`, {});
 
 export const disLikeItem = (itemId) => apiDelete(`/items/${itemId}/likes`);
 
 export const createItem = (name, weather, imageUrl) =>
-  apiPost("/items", { body: { name, weather, imageUrl } });
+  apiPost("/items", { name, weather, imageUrl });
 
 export const getAllItems = () => apiGet("/items", { withAuth: false });

@@ -38,7 +38,6 @@ export function EditProfileModal({ isOpen, onClose }) {
   };
 
   const validateUrl = (url) => {
-    if (!url.trim()) return true; // Avatar URL is optional
     return url.startsWith("http://") || url.startsWith("https://");
   };
 

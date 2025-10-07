@@ -11,7 +11,7 @@ export function ItemCard({ _id, name, imageUrl, likes = [], onClick }) {
   const isLiked = currentUser?._id && likes.includes(currentUser._id);
 
   const handleLikeClick = async (e) => {
-    e.stopPropagation(); // Prevent card click from firing
+    e.stopPropagation();
 
     if (!isLoggedIn || !currentUser?._id) return;
 
@@ -29,23 +29,25 @@ export function ItemCard({ _id, name, imageUrl, likes = [], onClick }) {
   return (
     <article className={styles.itemCard} onClick={onClick}>
       <img src={imageUrl} alt={name} className={styles.itemCard__image} />
-      <div className={styles.itemCard__title} title={name}>
-        {name}
+      <div className={styles.itemCard__top}>
+        <div className={styles.itemCard__title} title={name}>
+          {name}
+        </div>
+        {isLoggedIn && (
+          <button
+            className={styles.itemCard__likeButton}
+            onClick={handleLikeClick}
+            aria-label={isLiked ? "Unlike item" : "Like item"}
+            type="button"
+          >
+            <img
+              src={isLiked ? likedIcon : dislikedIcon}
+              alt={isLiked ? "Liked" : "Not liked"}
+              className={styles.itemCard__likeIcon}
+            />
+          </button>
+        )}
       </div>
-      {isLoggedIn && (
-        <button
-          className={styles.itemCard__likeButton}
-          onClick={handleLikeClick}
-          aria-label={isLiked ? "Unlike item" : "Like item"}
-          type="button"
-        >
-          <img
-            src={isLiked ? likedIcon : dislikedIcon}
-            alt={isLiked ? "Liked" : "Not liked"}
-            className={styles.itemCard__likeIcon}
-          />
-        </button>
-      )}
     </article>
   );
 }

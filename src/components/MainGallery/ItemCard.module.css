@@ -23,11 +23,19 @@
   object-fit: cover;
 }
 
-.itemCard__title {
+.itemCard__top {
   position: absolute;
   top: 20px;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2;
+}
+
+.itemCard__title {
+  position: static;
   width: 73px;
   height: 24px;
   display: flex;
@@ -45,21 +53,16 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  z-index: 1;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 .itemCard__likeButton {
-  position: absolute;
-  top: 16px;
-  right: 16px;
   background: none;
   border: none;
   cursor: pointer;
   padding: 4px;
-  z-index: 2;
   transition: transform 0.2s ease;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 }
@@ -90,12 +93,6 @@
     width: 80px;
     height: 26px;
     font-size: 13px;
-    top: 22px;
-  }
-
-  .itemCard__likeButton {
-    top: 14px;
-    right: 14px;
   }
 
   .itemCard__likeIcon {
@@ -109,12 +106,6 @@
     width: 76px;
     height: 22px;
     font-size: 13px;
-    top: 24px;
-  }
-
-  .itemCard__likeButton {
-    top: 12px;
-    right: 12px;
   }
 
   .itemCard__likeIcon {
@@ -135,13 +126,7 @@
     width: 90px;
     height: 30px;
     font-size: 14px;
-    top: 26px;
     border-radius: 8px;
-  }
-
-  .itemCard__likeButton {
-    top: 12px;
-    right: 12px;
   }
 
   .itemCard__likeIcon {
@@ -161,13 +146,7 @@
     width: 85px;
     height: 28px;
     font-size: 13px;
-    top: 24px;
     border-radius: 6px;
-  }
-
-  .itemCard__likeButton {
-    top: 10px;
-    right: 10px;
   }
 
   .itemCard__likeIcon {
@@ -187,12 +166,6 @@
     width: 80px;
     height: 26px;
     font-size: 12px;
-    top: 22px;
-  }
-
-  .itemCard__likeButton {
-    top: 8px;
-    right: 8px;
   }
 
   .itemCard__likeIcon {
