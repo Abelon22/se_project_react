@@ -180,6 +180,7 @@
   color: white;
   background-color: rgba(0, 0, 0, 1);
   border: none;
+  width: 124px;
   border-radius: 4px;
   padding: 8px 16px;
   cursor: pointer;

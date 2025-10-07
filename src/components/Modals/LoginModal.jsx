@@ -1,8 +1,10 @@
 import styles from "./LoginModal.module.css";
 import closeIcon from "../../assets/images/close.svg";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useCurrentUser } from "../../context/useCurrentUser";
 import { useModalContext } from "../../context/useModalContext";
+import { useFormValidation } from "../../hooks/useFormValidation";
+import { validateForm } from "../../utils/formHelpers";
 
 export function LoginModal({ isOpen, onClose }) {
   const { login } = useCurrentUser();
@@ -21,44 +23,42 @@ export function LoginModal({ isOpen, onClose }) {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  // Wire into shared "login" rules
+  const { runFullValidation, validateField } = useFormValidation(
+    "login",
+    formData,
+    formError
+  );
+
+  // Live validity for submit button
+  const formValid = useMemo(
+    () => validateForm("login", formData).isValid,
+    [formData]
+  );
+
   const handleInputChange = (e) => {
     const { name: field, value } = e.target;
     setFormData((prev) => ({ ...prev, [field]: value }));
+
+    // Clear field-level error as user types
     if (formError[field]) {
       setFormError((prev) => ({ ...prev, [field]: "", general: "" }));
     }
   };
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const isFormValid = () => {
-    return (
-      formData.email.trim() &&
-      validateEmail(formData.email) &&
-      formData.password.trim()
-    );
+  const handleBlur = (e) => {
+    const { name: field } = e.target;
+    const { error } = validateField(field);
+    setFormError((prev) => ({ ...prev, [field]: error || "" }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const errors = { email: "", password: "", general: "" };
-
-    if (!formData.email.trim()) {
-      errors.email = "Email is required";
-    } else if (!validateEmail(formData.email)) {
-      errors.email = "Please enter a valid email address";
-    }
-
-    if (!formData.password.trim()) {
-      errors.password = "Password is required";
-    }
-
-    if (errors.email || errors.password) {
-      setFormError(errors);
+    // Full validation pass
+    const { errors, isValid } = runFullValidation();
+    if (!isValid) {
+      setFormError((prev) => ({ ...prev, ...errors, general: "" }));
       return;
     }
 
@@ -67,8 +67,9 @@ export function LoginModal({ isOpen, onClose }) {
       await login(formData.email, formData.password);
       setFormData({ email: "", password: "" });
       setFormError({ email: "", password: "", general: "" });
-      onClose();
+      onClose?.();
     } catch (error) {
+      // Keep your existing general auth UX
       setFormError({
         email: "",
         password: "",
@@ -84,7 +85,7 @@ export function LoginModal({ isOpen, onClose }) {
     setFormData({ email: "", password: "" });
     setFormError({ email: "", password: "", general: "" });
     setIsLoading(false);
-    onClose();
+    onClose?.();
   };
 
   const handleOverlayClick = (e) => {
@@ -132,6 +133,7 @@ export function LoginModal({ isOpen, onClose }) {
               placeholder="Email"
               value={formData.email}
               onChange={handleInputChange}
+              onBlur={handleBlur}
             />
             {formError.email && (
               <p className={styles.modal__error}>{formError.email}</p>
@@ -150,6 +152,7 @@ export function LoginModal({ isOpen, onClose }) {
               placeholder="Password"
               value={formData.password}
               onChange={handleInputChange}
+              onBlur={handleBlur}
             />
             {formError.password && (
               <p className={styles.modal__error}>{formError.password}</p>
@@ -161,16 +164,14 @@ export function LoginModal({ isOpen, onClose }) {
             )}
           </div>
 
-          <button
-            type="submit"
-            className={styles.modal__submit}
-            disabled={isLoading || !isFormValid()}
-          >
-            {isLoading ? "Logging in..." : "Log in"}
-          </button>
-
-          <p className={styles.modal__switch}>
-            or{" "}
+          <div className={styles.modal__actions}>
+            <button
+              type="submit"
+              className={styles.modal__submit}
+              disabled={isLoading || !formValid}
+            >
+              {isLoading ? "Logging in..." : "Log in"}
+            </button>
             <button
               type="button"
               className={styles.modal__switch_button}
@@ -178,7 +179,7 @@ export function LoginModal({ isOpen, onClose }) {
             >
               Sign up
             </button>
-          </p>
+          </div>
         </form>
       </div>
     </div>

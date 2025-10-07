@@ -30,9 +30,11 @@ export function ItemCard({ _id, name, imageUrl, likes = [], onClick }) {
     <article className={styles.itemCard} onClick={onClick}>
       <img src={imageUrl} alt={name} className={styles.itemCard__image} />
       <div className={styles.itemCard__top}>
-        <div className={styles.itemCard__title} title={name}>
-          {name}
-        </div>
+        <span className={styles.itemCard__badge}>
+          <span className={styles.itemCard__title} title={name}>
+            {name}
+          </span>
+        </span>
         {isLoggedIn && (
           <button
             className={styles.itemCard__likeButton}

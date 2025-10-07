@@ -1,8 +1,10 @@
 import styles from "./RegistrationModal.module.css";
 import closeIcon from "../../assets/images/close.svg";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useCurrentUser } from "../../context/useCurrentUser";
 import { useModalContext } from "../../context/useModalContext";
+import { useFormValidation } from "../../hooks/useFormValidation";
+import { validateForm } from "../../utils/formHelpers";
 
 export function RegistrationModal({ isOpen, onClose }) {
   const { handleRegistration } = useCurrentUser();
@@ -25,69 +27,39 @@ export function RegistrationModal({ isOpen, onClose }) {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const { runFullValidation, validateField } = useFormValidation(
+    "registration",
+    formData,
+    formError
+  );
+
+  const formValid = useMemo(
+    () => validateForm("registration", formData).isValid,
+    [formData]
+  );
+
   const handleInputChange = (e) => {
     const { name: field, value } = e.target;
     setFormData((prev) => ({ ...prev, [field]: value }));
+
     if (formError[field]) {
       setFormError((prev) => ({ ...prev, [field]: "", general: "" }));
     }
   };
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const validateUrl = (url) => {
-    if (!url.trim()) return true; // Avatar URL is optional
-    return url.startsWith("http://") || url.startsWith("https://");
-  };
-
-  const isFormValid = () => {
-    return (
-      formData.email.trim() &&
-      validateEmail(formData.email) &&
-      formData.password.trim() &&
-      formData.password.length >= 6 &&
-      formData.name.trim() &&
-      (!formData.avatar || validateUrl(formData.avatar))
-    );
+  const handleBlur = (e) => {
+    const { name: field } = e.target;
+    const { error } = validateField(field);
+    setFormError((prev) => ({ ...prev, [field]: error || "" }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const errors = {
-      email: "",
-      password: "",
-      name: "",
-      avatar: "",
-      general: "",
-    };
-
-    if (!formData.email.trim()) {
-      errors.email = "Email is required";
-    } else if (!validateEmail(formData.email)) {
-      errors.email = "Please enter a valid email address";
-    }
-
-    if (!formData.password.trim()) {
-      errors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      errors.password = "Password must be at least 6 characters";
-    }
-
-    if (!formData.name.trim()) {
-      errors.name = "Name is required";
-    }
-
-    if (formData.avatar && !validateUrl(formData.avatar)) {
-      errors.avatar =
-        "Please enter a valid URL (must start with http:// or https://)";
-    }
-
-    if (errors.email || errors.password || errors.name || errors.avatar) {
-      setFormError(errors);
+    // Full validation pass
+    const { errors, isValid } = runFullValidation();
+    if (!isValid) {
+      setFormError((prev) => ({ ...prev, ...errors, general: "" }));
       return;
     }
 
@@ -99,6 +71,7 @@ export function RegistrationModal({ isOpen, onClose }) {
         formData.email,
         formData.password
       );
+      // reset on success
       setFormData({ email: "", password: "", name: "", avatar: "" });
       setFormError({
         email: "",
@@ -107,15 +80,12 @@ export function RegistrationModal({ isOpen, onClose }) {
         avatar: "",
         general: "",
       });
-      onClose();
+      onClose?.();
     } catch (error) {
-      setFormError({
-        email: "",
-        password: "",
-        name: "",
-        avatar: "",
+      setFormError((prev) => ({
+        ...prev,
         general: error?.message || "Registration failed. Please try again.",
-      });
+      }));
     } finally {
       setIsLoading(false);
     }
@@ -131,7 +101,7 @@ export function RegistrationModal({ isOpen, onClose }) {
       general: "",
     });
     setIsLoading(false);
-    onClose();
+    onClose?.();
   };
 
   const handleOverlayClick = (e) => {
@@ -179,6 +149,7 @@ export function RegistrationModal({ isOpen, onClose }) {
               placeholder="Email"
               value={formData.email}
               onChange={handleInputChange}
+              onBlur={handleBlur}
             />
             {formError.email && (
               <p className={styles.modal__error}>{formError.email}</p>
@@ -197,6 +168,7 @@ export function RegistrationModal({ isOpen, onClose }) {
               placeholder="Password"
               value={formData.password}
               onChange={handleInputChange}
+              onBlur={handleBlur}
             />
             {formError.password && (
               <p className={styles.modal__error}>{formError.password}</p>
@@ -215,6 +187,7 @@ export function RegistrationModal({ isOpen, onClose }) {
               placeholder="Name"
               value={formData.name}
               onChange={handleInputChange}
+              onBlur={handleBlur}
             />
             {formError.name && (
               <p className={styles.modal__error}>{formError.name}</p>
@@ -233,22 +206,21 @@ export function RegistrationModal({ isOpen, onClose }) {
               placeholder="Avatar URL"
               value={formData.avatar}
               onChange={handleInputChange}
+              onBlur={handleBlur}
             />
             {formError.avatar && (
               <p className={styles.modal__error}>{formError.avatar}</p>
             )}
           </div>
 
-          <button
-            type="submit"
-            className={styles.modal__submit}
-            disabled={isLoading || !isFormValid()}
-          >
-            {isLoading ? "Signing up..." : "Sign up"}
-          </button>
-
-          <p className={styles.modal__switch}>
-            or{" "}
+          <div className={styles.modal__actions}>
+            <button
+              type="submit"
+              className={styles.modal__submit}
+              disabled={isLoading || !formValid}
+            >
+              {isLoading ? "Signing up..." : "Sign up"}
+            </button>
             <button
               type="button"
               className={styles.modal__switch_button}
@@ -256,7 +228,7 @@ export function RegistrationModal({ isOpen, onClose }) {
             >
               Log in
             </button>
-          </p>
+          </div>
         </form>
       </div>
     </div>

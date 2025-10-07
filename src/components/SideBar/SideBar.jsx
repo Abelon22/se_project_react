@@ -23,20 +23,23 @@ export function SideBar() {
         />
         <h2 className={styles.sidebar__name}>{currentUser?.name || "User"}</h2>
       </div>
-      <button
-        type="button"
-        onClick={openEditProfileModal}
-        className={styles.sidebar__button}
-      >
-        Change profile data
-      </button>
-      <button
-        type="button"
-        onClick={handleLogout}
-        className={styles.sidebar__button_logout}
-      >
-        Log out
-      </button>
+
+      <div className={styles.sidebar__button_container}>
+        <button
+          type="button"
+          onClick={openEditProfileModal}
+          className={styles.sidebar__button}
+        >
+          Change profile data
+        </button>
+        <button
+          type="button"
+          onClick={handleLogout}
+          className={styles.sidebar__button_logout}
+        >
+          Log out
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,31 +1,100 @@
 import styles from "./ModalWithForm.module.css";
 import closeIcon from "../../assets/images/close.svg";
+import { useState, useMemo } from "react";
 import { useClothingItems } from "../../context/useClothingItems";
-import { useModalForm } from "../../hooks/useModalForm";
+import { useFormValidation } from "../../hooks/useFormValidation";
+import { validateForm } from "../../utils/formHelpers";
 
 export function ModalWithForm({ title, name, buttonText, isOpen, onClose }) {
-  const {
-    formData,
-    setFormData,
-    setFormError,
-    setIsLoading,
-    formError,
-    isLoading,
-    handleInputChange,
-    handleSubmit,
-  } = useModalForm();
-
   const { createClothingItem } = useClothingItems();
 
-  const handleClose = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    imageUrl: "",
+    weather: "",
+  });
+
+  const [formError, setFormError] = useState({
+    name: "",
+    imageUrl: "",
+    weather: "",
+    general: "",
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const submitAction = async (n, w, url) => {
+    return createClothingItem(n, w, url);
+  };
+
+  const { runFullValidation, validateField } = useFormValidation(
+    "add-item",
+    formData,
+    formError
+  );
+
+  const formValid = useMemo(
+    () => validateForm("add-item", formData).isValid,
+    [formData]
+  );
+
+  const handleInputChange = (e) => {
+    const { name: field, value } = e.target;
+    setFormData((prev) => ({ ...prev, [field]: value }));
+
+    if (formError[field]) {
+      setFormError((prev) => ({ ...prev, [field]: "", general: "" }));
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name: field } = e.target;
+    const { error } = validateField(field);
+    setFormError((prev) => ({ ...prev, [field]: error || "" }));
+  };
+
+  const resetForm = () => {
     setFormData({ name: "", imageUrl: "", weather: "" });
-    setFormError({ name: "", imageUrl: "", weather: "" });
+    setFormError({ name: "", imageUrl: "", weather: "", general: "" });
     setIsLoading(false);
-    onClose();
+  };
+
+  const handleClose = () => {
+    resetForm();
+    onClose?.();
   };
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) handleClose();
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const { errors, isValid } = runFullValidation();
+    if (!isValid) {
+      setFormError((prev) => ({ ...prev, ...errors, general: "" }));
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await submitAction(formData.name, formData.weather, formData.imageUrl);
+      resetForm();
+      onClose?.();
+    } catch (error) {
+      setFormError((prev) => ({
+        ...prev,
+        name: error?.name || "",
+        imageUrl: error?.imageUrl || "",
+        weather: error?.weather || "",
+        general:
+          error?.message ||
+          "Failed to save item. Please check your data and try again.",
+      }));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -66,6 +135,7 @@ export function ModalWithForm({ title, name, buttonText, isOpen, onClose }) {
               placeholder="Name"
               value={formData.name}
               onChange={handleInputChange}
+              onBlur={handleBlur}
             />
             {formError.name && (
               <p className={styles.modal__error}>{formError.name}</p>
@@ -84,6 +154,7 @@ export function ModalWithForm({ title, name, buttonText, isOpen, onClose }) {
               placeholder="Image URL"
               value={formData.imageUrl}
               onChange={handleInputChange}
+              onBlur={handleBlur}
             />
             {formError.imageUrl && (
               <p className={styles.modal__error}>{formError.imageUrl}</p>
@@ -103,6 +174,7 @@ export function ModalWithForm({ title, name, buttonText, isOpen, onClose }) {
                   value="hot"
                   checked={formData.weather === "hot"}
                   onChange={handleInputChange}
+                  onBlur={handleBlur}
                   className={styles.modal__radio}
                 />
                 <span className={styles.modal__radio_text}>Hot</span>
@@ -115,6 +187,7 @@ export function ModalWithForm({ title, name, buttonText, isOpen, onClose }) {
                   value="warm"
                   checked={formData.weather === "warm"}
                   onChange={handleInputChange}
+                  onBlur={handleBlur}
                   className={styles.modal__radio}
                 />
                 <span className={styles.modal__radio_text}>Warm</span>
@@ -127,6 +200,7 @@ export function ModalWithForm({ title, name, buttonText, isOpen, onClose }) {
                   value="cold"
                   checked={formData.weather === "cold"}
                   onChange={handleInputChange}
+                  onBlur={handleBlur}
                   className={styles.modal__radio}
                 />
                 <span className={styles.modal__radio_text}>Cold</span>
@@ -140,7 +214,7 @@ export function ModalWithForm({ title, name, buttonText, isOpen, onClose }) {
           <button
             type="submit"
             className={styles.modal__submit}
-            disabled={isLoading || Object.values(formError).some(Boolean)}
+            disabled={isLoading || !formValid}
           >
             {isLoading ? "Saving..." : buttonText}
           </button>

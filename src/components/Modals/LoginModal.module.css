@@ -69,6 +69,14 @@
   gap: 24px;
 }
 
+.modal__actions {
+  display: flex;
+  width: 168px;
+  height: 40px;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .modal__field {
   display: flex;
   flex-direction: column;
@@ -117,6 +125,13 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
   margin-top: 8px;
+}
+
+.modal__actions .modal__submit {
+  width: 84px;
+  height: 40px;
+  margin-top: 0;
+  padding: 0;
 }
 
 .modal__submit:hover:not(:disabled) {
@@ -174,6 +189,14 @@
   cursor: pointer;
   padding: 0;
   transition: opacity 0.2s ease;
+}
+
+.modal__actions .modal__switch_button {
+  width: 84px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal__switch_button:hover {

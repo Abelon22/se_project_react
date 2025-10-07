@@ -34,28 +34,35 @@
   z-index: 2;
 }
 
-.itemCard__title {
-  position: static;
-  width: 73px;
-  height: 24px;
-  display: flex;
+.itemCard__badge {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  background: #ffffff;
-  color: rgba(0, 0, 0, 1);
+  padding: 4px 8px;
   border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 
+  /* prevent the badge from getting too wide on large cards */
+  max-inline-size: clamp(8ch, 45%, 16ch);
+}
+
+/* text: handles truncation + sizing */
+.itemCard__title {
+  display: block; /* so ellipsis works reliably */
   font-size: 12px;
   font-weight: 600;
   line-height: 1;
 
+  /* truncation */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-}
 
+  /* let text fill the badge but never overflow it */
+  max-inline-size: 100%;
+}
 .itemCard__likeButton {
   background: none;
   border: none;
@@ -117,7 +124,7 @@
 @media (max-width: 630px) {
   .itemCard {
     border-radius: 12px;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 1 / 1;
     max-width: 320px;
     margin: 0 auto;
   }

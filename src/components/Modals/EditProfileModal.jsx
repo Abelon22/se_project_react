@@ -1,7 +1,9 @@
 import styles from "./EditProfileModal.module.css";
 import closeIcon from "../../assets/images/close.svg";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useCurrentUser } from "../../context/useCurrentUser";
+import { useFormValidation } from "../../hooks/useFormValidation";
+import { validateForm } from "../../utils/formHelpers";
 
 export function EditProfileModal({ isOpen, onClose }) {
   const { currentUser, updateUser } = useCurrentUser();
@@ -19,44 +21,49 @@ export function EditProfileModal({ isOpen, onClose }) {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  // Update form data when currentUser changes or modal opens
   useEffect(() => {
     if (isOpen && currentUser) {
       setFormData({
         name: currentUser.name || "",
         avatar: currentUser.avatar || "",
       });
+      setFormError({ name: "", avatar: "", general: "" });
     }
   }, [isOpen, currentUser]);
+
+  const { runFullValidation, validateField } = useFormValidation(
+    "edit-profile",
+    formData,
+    formError
+  );
+
+  const formValid = useMemo(
+    () => validateForm("edit-profile", formData).isValid,
+    [formData]
+  );
 
   const handleInputChange = (e) => {
     const { name: field, value } = e.target;
     setFormData((prev) => ({ ...prev, [field]: value }));
+
+    // Clear existing error as user types
     if (formError[field]) {
       setFormError((prev) => ({ ...prev, [field]: "", general: "" }));
     }
   };
 
-  const validateUrl = (url) => {
-    return url.startsWith("http://") || url.startsWith("https://");
+  const handleBlur = (e) => {
+    const { name: field } = e.target;
+    const { error } = validateField(field);
+    setFormError((prev) => ({ ...prev, [field]: error || "" }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const errors = { name: "", avatar: "", general: "" };
-
-    if (!formData.name.trim()) {
-      errors.name = "Name is required";
-    }
-
-    if (formData.avatar && !validateUrl(formData.avatar)) {
-      errors.avatar =
-        "Please enter a valid URL (must start with http:// or https://)";
-    }
-
-    if (errors.name || errors.avatar) {
-      setFormError(errors);
+    const { errors, isValid } = runFullValidation();
+    if (!isValid) {
+      setFormError((prev) => ({ ...prev, ...errors, general: "" }));
       return;
     }
 
@@ -64,14 +71,13 @@ export function EditProfileModal({ isOpen, onClose }) {
     try {
       await updateUser(formData.name, formData.avatar);
       setFormError({ name: "", avatar: "", general: "" });
-      onClose();
+      onClose?.();
     } catch (error) {
-      setFormError({
-        name: "",
-        avatar: "",
+      setFormError((prev) => ({
+        ...prev,
         general:
           error?.message || "Failed to update profile. Please try again.",
-      });
+      }));
     } finally {
       setIsLoading(false);
     }
@@ -84,7 +90,7 @@ export function EditProfileModal({ isOpen, onClose }) {
     });
     setFormError({ name: "", avatar: "", general: "" });
     setIsLoading(false);
-    onClose();
+    onClose?.();
   };
 
   const handleOverlayClick = (e) => {
@@ -127,6 +133,7 @@ export function EditProfileModal({ isOpen, onClose }) {
               placeholder={currentUser?.name || "Name"}
               value={formData.name}
               onChange={handleInputChange}
+              onBlur={handleBlur}
             />
             {formError.name && (
               <p className={styles.modal__error}>{formError.name}</p>
@@ -145,6 +152,7 @@ export function EditProfileModal({ isOpen, onClose }) {
               placeholder={currentUser?.avatar || "Avatar URL"}
               value={formData.avatar}
               onChange={handleInputChange}
+              onBlur={handleBlur}
             />
             {formError.avatar && (
               <p className={styles.modal__error}>{formError.avatar}</p>
@@ -154,7 +162,7 @@ export function EditProfileModal({ isOpen, onClose }) {
           <button
             type="submit"
             className={styles.modal__submit}
-            disabled={isLoading}
+            disabled={isLoading || !formValid}
           >
             {isLoading ? "Saving..." : "Save changes"}
           </button>
