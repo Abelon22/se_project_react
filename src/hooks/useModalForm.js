@@ -45,9 +45,14 @@ export const useModalForm = () => {
 
     setIsLoading(true);
     try {
-      await createClothingItem(formData);
+      await createClothingItem(
+        formData.name,
+        formData.weather,
+        formData.imageUrl
+      );
       setFormData({ name: "", imageUrl: "", weather: "" });
       setFormError({ name: "", imageUrl: "", weather: "" });
+      handleClose();
     } catch (error) {
       setFormError({
         name: error?.name || "",
@@ -56,7 +61,6 @@ export const useModalForm = () => {
       });
     } finally {
       setIsLoading(false);
-      handleClose();
     }
   };
 

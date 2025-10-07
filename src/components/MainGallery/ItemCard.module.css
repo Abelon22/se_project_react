@@ -49,6 +49,35 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
+.itemCard__likeButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 2;
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.itemCard__likeButton:hover {
+  transform: scale(1.1);
+}
+
+.itemCard__likeButton:active {
+  transform: scale(0.95);
+}
+
+.itemCard__likeIcon {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
 @media (min-width: 1200px) {
   .itemCard {
     aspect-ratio: auto;
@@ -63,6 +92,16 @@
     font-size: 13px;
     top: 22px;
   }
+
+  .itemCard__likeButton {
+    top: 14px;
+    right: 14px;
+  }
+
+  .itemCard__likeIcon {
+    width: 22px;
+    height: 22px;
+  }
 }
 
 @media (max-width: 768px) and (min-width: 581px) {
@@ -71,6 +110,16 @@
     height: 22px;
     font-size: 13px;
     top: 24px;
+  }
+
+  .itemCard__likeButton {
+    top: 12px;
+    right: 12px;
+  }
+
+  .itemCard__likeIcon {
+    width: 20px;
+    height: 20px;
   }
 }
 
@@ -89,6 +138,16 @@
     top: 26px;
     border-radius: 8px;
   }
+
+  .itemCard__likeButton {
+    top: 12px;
+    right: 12px;
+  }
+
+  .itemCard__likeIcon {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -105,6 +164,16 @@
     top: 24px;
     border-radius: 6px;
   }
+
+  .itemCard__likeButton {
+    top: 10px;
+    right: 10px;
+  }
+
+  .itemCard__likeIcon {
+    width: 18px;
+    height: 18px;
+  }
 }
 
 @media (max-width: 360px) {
@@ -119,5 +188,15 @@
     height: 26px;
     font-size: 12px;
     top: 22px;
+  }
+
+  .itemCard__likeButton {
+    top: 8px;
+    right: 8px;
+  }
+
+  .itemCard__likeIcon {
+    width: 16px;
+    height: 16px;
   }
 }

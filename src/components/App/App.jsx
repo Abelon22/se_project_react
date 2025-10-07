@@ -24,8 +24,8 @@ export default function App() {
 
       <Outlet />
       <div className={styles.app_profile_hidden}>
-        <Profile />
-        <Main />
+        {/* <Profile />
+        <Main /> */}
       </div>
 
       <ModalWithForm

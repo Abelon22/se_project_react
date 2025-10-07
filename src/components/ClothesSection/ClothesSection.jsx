@@ -14,6 +14,8 @@ export function ClothesSection({ onCardClick, onAddClick }) {
     (item) => item.weather === weather
   );
 
+  console.log(itemsToDisplay);
+
   return (
     <section className={styles.clothesSection}>
       <div className={styles.clothesSection__header}>
