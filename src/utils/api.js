@@ -1,6 +1,4 @@
-export const BASE_URL = "http://localhost:3002/items";
-
-export const API_BASE_URL = "http://localhost:3001";
+export const BASE_URL = "http://localhost:3001";
 
 export const JWT_KEY = "jwt";
 
@@ -27,7 +25,7 @@ async function apiFetch(
   path,
   { method = "GET", body, headers = {}, withAuth = true, signal } = {}
 ) {
-  const url = `${API_BASE_URL}${path}`;
+  const url = `${BASE_URL}${path}`;
   const finalHeaders = { "Content-Type": "application/json", ...headers };
 
   // attach token unless the call is public OR withAuth is false
