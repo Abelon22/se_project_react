@@ -85,7 +85,6 @@ export default function CurrentUserProvider({ children }) {
     return me;
   }, []);
 
-  // Update user then sync context; falls back to GET /users/me if needed
   const updateUser = useCallback(async (name, avatar) => {
     const updated = await apiUpdateUser(name, avatar);
     if (updated && updated._id) {

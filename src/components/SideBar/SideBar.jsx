@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 export function SideBar() {
   const { currentUser, logout } = useCurrentUser();
+
   const { openEditProfileModal } = useModalContext();
   const navigate = useNavigate();
 

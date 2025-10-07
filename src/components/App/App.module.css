@@ -21,11 +21,6 @@ body {
   margin: 0 auto;
 }
 
-.app_profile_hidden {
-  /* I did this because it says I have to have Profile in the App but we are using React Router so I used a layout to share common components */
-  display: none;
-}
-
 .app_footer {
   margin-top: 80px;
 }

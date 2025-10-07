@@ -10,7 +10,6 @@ export const isOptionalHttpUrl = (url) => {
   return !v || isHttpUrl(v);
 };
 
-// ---------- rule builders (each returns a function -> errorText|null) ----------
 export const required =
   (msg = "This field is required") =>
   (v) =>
@@ -41,7 +40,6 @@ export const truthy =
   (v) =>
     v ? null : msg;
 
-// ---------- per-form rule maps ----------
 const REGISTRATION_RULES = {
   email: [required("Email is required"), emailRule()],
   password: [required("Password is required"), minLen(6)],
@@ -65,7 +63,6 @@ const ADD_ITEM_RULES = {
   weather: [truthy("Weather is required")],
 };
 
-// export a lookup so you can share one entry point
 const FORM_RULES = {
   registration: REGISTRATION_RULES,
   login: LOGIN_RULES,
@@ -73,7 +70,6 @@ const FORM_RULES = {
   "add-item": ADD_ITEM_RULES,
 };
 
-// ---------- engine: run rules over formData ----------
 export function validateByRules(formData, rulesMap) {
   const errors = {};
   for (const field in rulesMap) {
@@ -82,18 +78,16 @@ export function validateByRules(formData, rulesMap) {
     const firstError = rules.map((fn) => fn(value, formData)).find(Boolean);
     if (firstError) errors[field] = firstError;
   }
-  // fields with no rules never get an error entry
+
   return { errors, isValid: Object.keys(errors).length === 0 };
 }
 
-// ---------- main API used by components ----------
 export function validateForm(formName, formData) {
   const rules = FORM_RULES[formName];
   if (!rules) return { errors: { general: "Unknown form" }, isValid: false };
   return validateByRules(formData, rules);
 }
 
-// For compatibility if you still want a boolean check:
 export function isFormValid(formName, formData) {
   return validateForm(formName, formData).isValid;
 }

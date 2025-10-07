@@ -1,17 +1,15 @@
-// src/routes/ProtectedRoute.jsx
-import { Navigate, Outlet } from "react-router-dom";
-import { useCurrentUser } from "../context/useCurrentUser";
+import { Navigate, useLocation } from "react-router-dom";
+import { useCurrentUser } from "../context/useCurrentUser.js";
 
-export default function ProtectedRouter({
-  to = "/",
-  replace = true,
-  children,
-}) {
-  const { isLoggedIn } = useCurrentUser();
+export default function ProtectedRouter({ children }) {
+  const { isLoggedIn, currentUser, currentUserLoading } = useCurrentUser();
+  const location = useLocation();
 
-  if (!isLoggedIn) {
-    return <Navigate to={to} replace={replace} />;
+  if (currentUserLoading) return null;
+
+  if (!isLoggedIn || !currentUser) {
+    return <Navigate to="/" replace state={{ from: location }} />;
   }
 
-  return children ?? <Outlet />;
+  return children;
 }

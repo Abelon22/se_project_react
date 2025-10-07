@@ -6,21 +6,18 @@ export const getToken = () => localStorage.getItem(JWT_KEY);
 export const setToken = (t) => localStorage.setItem(JWT_KEY, t);
 export const clearToken = () => localStorage.removeItem(JWT_KEY);
 
-// --- endpoints that should NOT get Authorization automatically
 const PUBLIC_RULES = [
   { method: "POST", path: "/signin" },
   { method: "POST", path: "/signup" },
-  { method: "GET", path: "/items" }, // list items is public
+  { method: "GET", path: "/items" },
 ];
 
-// simple matcher
 function isPublic(method, path) {
   return PUBLIC_RULES.some(
     (r) => r.method === method.toUpperCase() && r.path === path
   );
 }
 
-// --- core fetch that always returns res.json()
 async function apiFetch(
   path,
   { method = "GET", body, headers = {}, withAuth = true, signal } = {}
@@ -28,7 +25,6 @@ async function apiFetch(
   const url = `${BASE_URL}${path}`;
   const finalHeaders = { "Content-Type": "application/json", ...headers };
 
-  // attach token unless the call is public OR withAuth is false
   const token = getToken();
   if (withAuth && token && !isPublic(method, path)) {
     finalHeaders.Authorization = `Bearer ${token}`;
@@ -41,7 +37,6 @@ async function apiFetch(
     signal,
   });
 
-  // your API returns JSON everywhere
   const data = await res.json().catch(() => null);
 
   if (!res.ok) {
@@ -55,7 +50,6 @@ async function apiFetch(
   return data;
 }
 
-// convenience helpers
 const apiGet = (path, opts) => apiFetch(path, { method: "GET", ...opts });
 const apiPost = (path, body, opts) =>
   apiFetch(path, { method: "POST", body, ...opts });
@@ -67,7 +61,6 @@ const apiPatch = (path, body, opts) =>
 const apiPut = (path, body, opts) =>
   apiFetch(path, { method: "PUT", body, ...opts });
 
-// specific calls
 export const getMe = (opts) => apiGet("/users/me", opts);
 export const postSignin = (email, password) =>
   apiPost("/signin", { email, password }, { withAuth: false });

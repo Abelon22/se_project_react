@@ -43,7 +43,6 @@ export const ClothingItemsProvider = ({ children }) => {
     refreshClothingItems();
   }, [refreshClothingItems]);
 
-  // ---- Create
   const createClothingItem = useCallback(async (name, weather, imageUrl) => {
     setClothingItemsError((e) => ({ ...e, POST: null }));
     try {
@@ -61,11 +60,10 @@ export const ClothingItemsProvider = ({ children }) => {
     }
   }, []);
 
-  // ---- Delete
   const deleteClothingItem = useCallback(async (itemId) => {
     setClothingItemsError((e) => ({ ...e, DELETE: null }));
     try {
-      await deleteItem(itemId); // DELETE /items/:id
+      await deleteItem(itemId);
       setClothingItems((items) => items.filter((it) => it._id !== itemId));
       setMutationMessage((m) => ({
         ...m,
@@ -78,11 +76,10 @@ export const ClothingItemsProvider = ({ children }) => {
     }
   }, []);
 
-  // ---- Like
   const likeClothingItem = useCallback(async (itemId) => {
     setClothingItemsError((e) => ({ ...e, PUT: null }));
     try {
-      const updated = await likeItem(itemId); // PUT /items/:id/likes
+      const updated = await likeItem(itemId);
       setClothingItems((items) =>
         items.map((it) => (it._id === itemId ? updated : it))
       );
@@ -98,11 +95,10 @@ export const ClothingItemsProvider = ({ children }) => {
     }
   }, []);
 
-  // ---- Dislike
   const dislikeClothingItem = useCallback(async (itemId) => {
     setClothingItemsError((e) => ({ ...e, PUT: null }));
     try {
-      const updated = await disLikeItem(itemId); // DELETE /items/:id/likes
+      const updated = await disLikeItem(itemId);
       setClothingItems((items) =>
         items.map((it) => (it._id === itemId ? updated : it))
       );
@@ -118,7 +114,6 @@ export const ClothingItemsProvider = ({ children }) => {
     }
   }, []);
 
-  // ---- Selector: items by owner id (from state only)
   const getItemsByOwner = useCallback(
     (ownerId) => clothingItems.filter((it) => it.owner === ownerId),
     [clothingItems]
@@ -126,20 +121,19 @@ export const ClothingItemsProvider = ({ children }) => {
 
   const value = useMemo(
     () => ({
-      // state
       clothingItems,
       isClothingItemsLoading,
       clothingItemsError,
       mutationMessage,
-      // actions
+
       refreshClothingItems,
       createClothingItem,
       deleteClothingItem,
       likeClothingItem,
       dislikeClothingItem,
-      // selectors
+
       getItemsByOwner,
-      // optional setter if you need direct control
+
       setClothingItems,
     }),
     [

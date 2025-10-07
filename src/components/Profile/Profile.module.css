@@ -24,10 +24,6 @@
   padding: 47px 32px 16px;
 }
 
-.profile__is_modal_open {
-  /* Background overlay handled by modal component */
-}
-
 .profile__footerWrap {
   position: relative;
   z-index: 2;

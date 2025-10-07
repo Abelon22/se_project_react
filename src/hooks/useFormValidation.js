@@ -1,4 +1,3 @@
-// useFormValidation.js
 import { useMemo, useCallback } from "react";
 import {
   validateForm,
@@ -7,18 +6,15 @@ import {
 } from "../utils/formHelpers";
 
 export function useFormValidation(formName, formData, formErrors) {
-  // validity derived from current error bag
   const isValidFromErrors = useMemo(
     () => Object.keys(formErrors || {}).every((k) => !formErrors[k]),
     [formErrors]
   );
 
-  // run full validation against current data
   const runFullValidation = useCallback(() => {
-    return validateForm(formName, formData); // { errors, isValid }
+    return validateForm(formName, formData);
   }, [formName, formData]);
 
-  // validate just one field (for onBlur)
   const validateField = useCallback(
     (field) => {
       const rules = getFormRules(formName);
