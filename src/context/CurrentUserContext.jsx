@@ -63,12 +63,21 @@ export default function CurrentUserProvider({ children }) {
   const handleRegistration = useCallback(
     async (name, avatar, email, password) => {
       setCurrentUserError(null);
-      const signUp = await postSignup(name, avatar, email, password);
-      setSignUpMessage(
-        `User with email ${signUp.email} has successfully signed up. Congratulations`
-      );
+      try {
+        const signUp = await postSignup(name, avatar, email, password);
+
+        setSignUpMessage(
+          `You have succesfully signed up with ${signUp.email} has successfully signed up. Congratulations`
+        );
+
+        const me = await login(email, password);
+        return me;
+      } catch (e) {
+        setCurrentUserError(e);
+        throw e;
+      }
     },
-    []
+    [login]
   );
 
   const logout = useCallback(() => {
