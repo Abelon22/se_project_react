@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <LocationProvider>
             <WeatherProvider>
               <ModalProvider>
-                <BrowserRouter basename="/se_project_react/">
+                <BrowserRouter>
                   <App />
                 </BrowserRouter>
               </ModalProvider>
