@@ -9,7 +9,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "npm run build && scp -r ./dist/* phairebelle@wtwr.lookids.com:/home/phairebelle/frontend && ssh phairebelle@wtwr.lookids.com \"chmod -R a+rX ~/frontend && sudo systemctl reload nginx\""
   },
   "dependencies": {
     "dotenv": "^17.2.3",
