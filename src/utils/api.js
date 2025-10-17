@@ -1,4 +1,10 @@
-export const BASE_URL = "http://localhost:3001";
+import { dotenv } from "dotenv";
+dotenv.config();
+
+export const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://wtwr.lookids.com"
+    : "http://localhost:3001";
 
 export const JWT_KEY = "jwt";
 

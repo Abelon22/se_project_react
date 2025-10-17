@@ -12,7 +12,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "dotenv": "^17.2.1",
+    "dotenv": "^17.2.3",
     "json-server": "^0.17.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -31,5 +31,5 @@
     "vite": "^5.3.1",
     "wait-on": "^8.0.5"
   },
-  "homepage": "https://Abelon22.github.io/se_project_react/"
+  "homepage": "https://wtwr.lookids.com"
 }
