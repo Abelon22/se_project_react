@@ -41,7 +41,7 @@ export function WeatherProvider({ children }) {
 
   const getWeatherCondition = (t) => {
     if (t >= 86) return "hot";
-    if (t >= 66 && t <= 85) return "warm";
+    if (t >= 66 && t < 86) return "warm";
     return "cold";
   };
 
