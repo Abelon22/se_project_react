@@ -82,7 +82,9 @@ export function WeatherProvider({ children }) {
           farenheit: f,
           celsius: f == null ? null : convertToCelsius(f),
         });
-        setWeather(getWeatherCondition(data.main?.temp ?? 0));
+
+        const tempF = data.main?.temp ?? null;
+        setWeather(tempF === null ? null : getWeatherCondition(tempF));
         setPreciseWeather({
           time: formattedTime,
           isDayTime,
